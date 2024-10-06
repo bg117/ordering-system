@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Afacad } from "next/font/google";
-import "./globals.css";
+import "./globals.scss";
 
 const font = Afacad({
   weight: ["400", "500", "600", "700"],
