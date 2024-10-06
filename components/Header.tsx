@@ -6,12 +6,12 @@ import { useState } from "react";
 import { Navbar, Container, Nav, Badge } from "react-bootstrap";
 
 export default function Header() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn] = useState(false);
 
   return (
-    <Navbar expand="lg" className="bg-boo">
-      <Container className="text-white align-middle">
-        <Navbar.Brand href="#home">
+    <Navbar expand="lg" className="bg-primary navbar-dark">
+      <Container className="align-middle">
+        <Navbar.Brand href="/">
           <strong>PoodFanda</strong>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

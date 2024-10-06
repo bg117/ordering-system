@@ -10,7 +10,6 @@ const font = Afacad({
 
 export const metadata: Metadata = {
   title: "SRSTHS Online Ordering System",
-  description: "Made by Tristan Facundo",
 };
 
 export default function RootLayout({

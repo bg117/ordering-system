@@ -1,13 +1,36 @@
 // required to get $orange variable
-@import "~bootstrap/scss/functions"; 
+@import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+// create width responsive classes
+$sizes: (
+  25: 25%,
+  50: 50%,
+  75: 75%,
+  100: 100%
+);
+
+// Generate width classes for each breakpoint
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @each $size, $length in $sizes {
+    @include media-breakpoint-up($breakpoint) {
+      .w-#{$breakpoint}-#{$size} {
+        width: $length !important;
+      }
+    }
+  }
+}
 
 $boo: #5491c8; // set the $primary variable
 
 // merge with existing $theme-colors map
-$theme-colors: map-merge($theme-colors, (
-  "boo": $boo
-));
+$theme-colors: map-merge(
+  $theme-colors,
+  (
+    "primary": $boo,
+  )
+);
 
 // set changes
 @import "~bootstrap/scss/bootstrap";
