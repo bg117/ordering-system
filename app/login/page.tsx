@@ -2,15 +2,19 @@
 
 import Page from "@/components/Page";
 import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Form, Button, Card, Modal } from "react-bootstrap";
 
 export default function Login() {
   const [showModal, setShowModal] = useState<boolean | undefined>(undefined);
   const [isStudent, setIsStudent] = useState<boolean | undefined>(undefined);
+  const router = useRouter(); 
+
   const handleNotStudent = useCallback(() => {
     setIsStudent(false);
     setShowModal(false);
   }, []);
+
   const handleStudent = useCallback(() => {
     setIsStudent(true);
     setShowModal(false);
@@ -19,6 +23,16 @@ export default function Login() {
   useEffect(() => {
     setShowModal(true);
   }, []);
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); 
+
+    if (isStudent) {
+      router.push("/menu"); 
+    } else {
+      router.push("/queue"); 
+    }
+  };
 
   return (
     <Page>
@@ -49,7 +63,7 @@ export default function Login() {
       <div>
         <Card className="w-lg-50 mx-auto">
           <Card.Body>
-            <Form>
+            <Form onSubmit={handleSubmit}>
               <h2 className="text-center mb-4">Login</h2>
               <Form.Group controlId="formId" className="mb-2">
                 <Form.Label>
