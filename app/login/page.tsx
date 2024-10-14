@@ -1,8 +1,17 @@
 "use client";
 
 import Page from "@/components/Page";
-import { useCallback, useEffect, useState } from "react";
+import {
+  ChangeEventHandler,
+  FormEventHandler,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { Form, Button, Card, Modal, InputGroup } from "react-bootstrap";
+
+type InputChange = ChangeEventHandler<HTMLInputElement>;
+type FormSubmit = FormEventHandler<HTMLFormElement>;
 
 export default function Login() {
   const [showModal, setShowModal] = useState<boolean | undefined>(undefined);
@@ -21,15 +30,15 @@ export default function Login() {
     setShowModal(false);
   }, []);
 
-  const handleUsernameChange = useCallback((e) => {
+  const handleUsernameChange = useCallback<InputChange>((e) => {
     setUsername(e.target.value);
   }, []);
 
-  const handlePasswordChange = useCallback((e) => {
+  const handlePasswordChange = useCallback<InputChange>((e) => {
     setPassword(e.target.value);
   }, []);
 
-  const handleSubmit = useCallback(
+  const handleSubmit = useCallback<FormSubmit>(
     (e) => {
       e.preventDefault();
       alert(`Username: ${username}\nPassword: ${password}`);
