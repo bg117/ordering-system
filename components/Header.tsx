@@ -19,21 +19,34 @@ export default function Header() {
     <Navbar expand="lg" className="bg-primary navbar-dark">
       <Container className="align-middle">
         <Navbar.Brand href="/">
-          <strong>PoodFanda</strong>
+          <strong>Online Ordering System</strong>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="menu">Menu</Nav.Link>
+            <Nav.Link href="menu" active>
+              Menu
+            </Nav.Link>
           </Nav>
           <Nav className="ms-auto">
             {loggedIn ? (
-              <Nav.Link href="cart">
-                <FontAwesomeIcon icon={faBasketShopping} className="fs-4" />
-                <Badge bg="gray-300">0</Badge>
-              </Nav.Link>
+              <>
+                <Nav.Link href="/cart" active>
+                  <div className="d-flex align-items-center">
+                    <FontAwesomeIcon icon={faBasketShopping} className="fs-4" />
+                    <Badge bg="secondary" className="ms-1">
+                      0
+                    </Badge>
+                  </div>
+                </Nav.Link>
+                <Nav.Link href="/logout" active>
+                  Log Out
+                </Nav.Link>
+              </>
             ) : (
-              <Nav.Link href="login">Log In</Nav.Link>
+              <Nav.Link href="/login" active>
+                Log In
+              </Nav.Link>
             )}
           </Nav>
         </Navbar.Collapse>
