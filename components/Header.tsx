@@ -39,6 +39,7 @@ export default function Header() {
                     </Badge>
                   </div>
                 </Nav.Link>
+                {/* TODO: name here */}
                 <Nav.Link href="/logout" active>
                   Log Out
                 </Nav.Link>
