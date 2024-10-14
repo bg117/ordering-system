@@ -2,6 +2,7 @@
 
 import Page from "@/components/Page";
 import { supabase } from "@/utilities/supabase";
+import { useRouter } from "next/navigation";
 import {
   ChangeEventHandler,
   FormEventHandler,
@@ -9,17 +10,21 @@ import {
   useEffect,
   useState,
 } from "react";
-import { Form, Button, Card, Modal, InputGroup } from "react-bootstrap";
+import { Form, Button, Card, Modal, InputGroup, Alert } from "react-bootstrap";
 
 type InputChange = ChangeEventHandler<HTMLInputElement>;
 type FormSubmit = FormEventHandler<HTMLFormElement>;
 
 export default function Login() {
+  const router = useRouter();
+
   const [showModal, setShowModal] = useState<boolean | undefined>(undefined);
   const [isStudent, setIsStudent] = useState<boolean | undefined>(undefined);
 
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  const [error, setError] = useState<string | null>(null);
 
   const handleNotStudent = useCallback(() => {
     setIsStudent(false);
@@ -40,14 +45,19 @@ export default function Login() {
   }, []);
 
   const handleSubmit = useCallback<FormSubmit>(
-    (e) => {
+    async (e) => {
       e.preventDefault();
-      supabase.auth.signInWithPassword({
+      const { error } = await supabase.auth.signInWithPassword({
         email: `${username}${
           isStudent ? "@r4a-2.deped.gov.ph" : "@deped.gov.ph"
         }`,
         password,
       });
+      setError(error?.message ?? null);
+
+      if (!error) {
+        router.push("/");
+      }
     },
     [username, password, isStudent]
   );
@@ -86,6 +96,7 @@ export default function Login() {
         <Card className="w-lg-50 mx-auto">
           <Card.Body>
             <Form onSubmit={handleSubmit}>
+              {error && <Alert variant="danger">{error}</Alert>}
               <h2 className="text-center mb-4">Login</h2>
               <Form.Group controlId="formId" className="mb-2">
                 <Form.Label>
