@@ -1,6 +1,7 @@
 "use client";
 
 import Page from "@/components/Page";
+import { supabase } from "@/utilities/supabase";
 import {
   ChangeEventHandler,
   FormEventHandler,
@@ -41,9 +42,14 @@ export default function Login() {
   const handleSubmit = useCallback<FormSubmit>(
     (e) => {
       e.preventDefault();
-      alert(`Username: ${username}\nPassword: ${password}`);
+      supabase.auth.signInWithPassword({
+        email: `${username}${
+          isStudent ? "@r4a-2.deped.gov.ph" : "@deped.gov.ph"
+        }`,
+        password,
+      });
     },
-    [username, password]
+    [username, password, isStudent]
   );
 
   useEffect(() => {
