@@ -1,12 +1,19 @@
 "use client";
 
+import { supabase } from "@/utilities/supabase";
 import { faBasketShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Navbar, Container, Nav, Badge } from "react-bootstrap";
 
 export default function Header() {
-  const [loggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((_, session) => {
+      setLoggedIn(session !== null);
+    });
+  }, []);
 
   return (
     <Navbar expand="lg" className="bg-primary navbar-dark">
