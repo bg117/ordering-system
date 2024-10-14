@@ -29,6 +29,14 @@ export default function Login() {
     setPassword(e.target.value);
   }, []);
 
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      alert(`Username: ${username}\nPassword: ${password}`);
+    },
+    [username, password]
+  );
+
   useEffect(() => {
     setShowModal(true);
   }, []);
@@ -62,7 +70,7 @@ export default function Login() {
       <div>
         <Card className="w-lg-50 mx-auto">
           <Card.Body>
-            <Form>
+            <Form onSubmit={handleSubmit}>
               <h2 className="text-center mb-4">Login</h2>
               <Form.Group controlId="formId" className="mb-2">
                 <Form.Label>
