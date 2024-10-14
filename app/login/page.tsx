@@ -2,18 +2,31 @@
 
 import Page from "@/components/Page";
 import { useCallback, useEffect, useState } from "react";
-import { Form, Button, Card, Modal } from "react-bootstrap";
+import { Form, Button, Card, Modal, InputGroup } from "react-bootstrap";
 
 export default function Login() {
   const [showModal, setShowModal] = useState<boolean | undefined>(undefined);
   const [isStudent, setIsStudent] = useState<boolean | undefined>(undefined);
+
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
   const handleNotStudent = useCallback(() => {
     setIsStudent(false);
     setShowModal(false);
   }, []);
+
   const handleStudent = useCallback(() => {
     setIsStudent(true);
     setShowModal(false);
+  }, []);
+
+  const handleUsernameChange = useCallback((e) => {
+    setUsername(e.target.value);
+  }, []);
+
+  const handlePasswordChange = useCallback((e) => {
+    setPassword(e.target.value);
   }, []);
 
   useEffect(() => {
@@ -59,12 +72,27 @@ export default function Login() {
                     ? "Learner's Reference Number"
                     : "Employee Number"}
                 </Form.Label>
-                <Form.Control type="text" required />
+                <InputGroup>
+                  <Form.Control
+                    type="text"
+                    required
+                    onChange={handleUsernameChange}
+                  />
+                  {isStudent !== undefined && (
+                    <InputGroup.Text>
+                      {isStudent ? "@r4a-2.deped.gov.ph" : "@deped.gov.ph"}
+                    </InputGroup.Text>
+                  )}
+                </InputGroup>
               </Form.Group>
 
               <Form.Group controlId="formPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" required />
+                <Form.Control
+                  type="password"
+                  required
+                  onChange={handlePasswordChange}
+                />
               </Form.Group>
 
               <Button
