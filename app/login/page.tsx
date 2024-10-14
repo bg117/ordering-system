@@ -59,7 +59,7 @@ export default function Login() {
         router.push("/");
       }
     },
-    [username, password, isStudent]
+    [username, password, isStudent, router]
   );
 
   useEffect(() => {
