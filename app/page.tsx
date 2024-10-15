@@ -1,11 +1,5 @@
-import Page from "@/components/Page";
-import { Button } from "react-bootstrap";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return (
-    <Page>
-      <h1>Tristan</h1>
-      <Button variant="primary">Agawin si Ken</Button>
-    </Page>
-  );
+  redirect("/menu");
 }

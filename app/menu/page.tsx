@@ -1,12 +1,8 @@
-"use client";
-
-import Page from "@/components/Page";
-
 export default function Menu() {
   return (
-    <Page>
+    <main>
       <h1>Menu-do</h1>
       <p>why do birds, suddenly appear? every time, you are near !!</p>
-    </Page>
+    </main>
   );
 }
