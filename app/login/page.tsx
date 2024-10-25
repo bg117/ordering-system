@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { useFormState } from "react-dom";
 import { Form, Button, Card, Modal, InputGroup, Alert } from "react-bootstrap";
 import { login } from "./actions";
 
@@ -9,7 +8,7 @@ export default function Login() {
   const [showModal, setShowModal] = useState<boolean | undefined>(undefined);
   const [isStudent, setIsStudent] = useState<boolean | undefined>(undefined);
 
-  const [error, loginAction] = useFormState(login, null);
+  const [error, loginAction] = useActionState(login, null);
 
   const email = isStudent ? "@r4a-2.deped.gov.ph" : "@deped.gov.ph";
 
