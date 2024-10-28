@@ -16,7 +16,7 @@ export default function Header() {
       .then(() => {
         setLoggedIn(true);
       })
-      .catch((error) => {
+      .catch((error: any) => {
         console.error(error);
       });
   }, [supabase.auth]);
@@ -45,7 +45,6 @@ export default function Header() {
                     </Badge>
                   </div>
                 </Nav.Link>
-                {/* TODO: name here */}
                 <Nav.Link href="/logout" active>
                   Log Out
                 </Nav.Link>
