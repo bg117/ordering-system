@@ -56,7 +56,9 @@ export default function Login() {
         <Card className="w-lg-50 mx-auto">
           <Card.Body>
             <Form action={loginAction}>
-              {error && <Alert variant="danger">Error: {error}</Alert>}
+              {error && (
+                <Alert variant="danger">Error: {error}</Alert>
+              )}
               <h2 className="text-center mb-4">Login</h2>
               <Form.Group className="mb-2">
                 <Form.Label htmlFor="id">

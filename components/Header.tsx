@@ -1,61 +1,55 @@
-"use client";
-
-import { createClient } from "@/utilities/supabase/browser";
+import { getUser } from "@/utilities/user";
 import { faBasketShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
-import { Navbar, Container, Nav, Badge } from "react-bootstrap";
+import {
+  Navbar,
+  Container,
+  Nav,
+  Badge,
+  NavbarBrand,
+  NavbarToggle,
+  NavbarCollapse,
+  NavLink,
+} from "react-bootstrap";
 
-export default function Header() {
-  const supabase = createClient();
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  useEffect(() => {
-    supabase.auth
-      .getUser()
-      .then(() => {
-        setLoggedIn(true);
-      })
-      .catch((error: any) => {
-        console.error(error);
-      });
-  }, [supabase.auth]);
+export default async function Header() {
+  const user = await getUser();
 
   return (
     <Navbar expand="lg" className="bg-primary navbar-dark">
       <Container className="align-middle">
-        <Navbar.Brand href="/">
+        <NavbarBrand href="/">
           <strong>Online Ordering System</strong>
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+        </NavbarBrand>
+        <NavbarToggle aria-controls="basic-navbar-nav" />
+        <NavbarCollapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="menu" active>
+            <NavLink href="menu" active>
               Menu
-            </Nav.Link>
+            </NavLink>
           </Nav>
           <Nav className="ms-auto">
-            {loggedIn ? (
+            {user ? (
               <>
-                <Nav.Link href="/cart" active>
+                <NavLink href="/cart" active>
                   <div className="d-flex align-items-center">
                     <FontAwesomeIcon icon={faBasketShopping} className="fs-4" />
                     <Badge bg="secondary" className="ms-1">
                       0
                     </Badge>
                   </div>
-                </Nav.Link>
-                <Nav.Link href="/logout" active>
+                </NavLink>
+                <NavLink href="/logout" active>
                   Log Out
-                </Nav.Link>
+                </NavLink>
               </>
             ) : (
-              <Nav.Link href="/login" active>
+              <NavLink href="/login" active>
                 Log In
-              </Nav.Link>
+              </NavLink>
             )}
           </Nav>
-        </Navbar.Collapse>
+        </NavbarCollapse>
       </Container>
     </Navbar>
   );
