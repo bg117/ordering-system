@@ -1,17 +1,30 @@
 import type { Access, CollectionConfig } from "payload";
 
-const isSameUserOrAdmin: Access = ({ req: { user } }) => {
+const isSameUserOrAdmin: Access = async ({ req: { user, payload } }) => {
   // if user is not logged in, deny access
   if (!user) return false;
   // if admin, allow access
   if (user?.collection === "admins") return true;
 
   // find the cart that belongs to the user
-  return {
-    createdBy: {
-      equals: user.id,
+  const carts = await payload.find({
+    collection: "carts",
+    where: {
+      user: {
+        equals: user.id,
+      },
     },
-  };
+    depth: 0,
+    limit: 1,
+  });
+
+  return (
+    carts.totalDocs > 0 && {
+      cart: {
+        equals: carts.docs[0].id,
+      },
+    }
+  );
 };
 
 export const CartItems: CollectionConfig = {
