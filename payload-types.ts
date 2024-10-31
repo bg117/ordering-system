@@ -160,7 +160,6 @@ export interface Item {
 export interface Cart {
   id: number;
   user: number | User;
-  items: (number | Item)[];
   updatedAt: string;
   createdAt: string;
 }

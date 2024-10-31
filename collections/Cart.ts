@@ -11,13 +11,7 @@ export const Cart: CollectionConfig = {
       type: "relationship",
       relationTo: "users",
       required: true,
-    },
-    {
-      name: "items",
-      type: "relationship",
-      relationTo: "items",
-      hasMany: true,
-      required: true,
+      unique: true,
     }
   ],
 };
