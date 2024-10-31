@@ -1,7 +1,7 @@
 "use client";
 
 import { User } from "@/payload-types";
-import { createContext, useCallback, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 
 type AuthContextType = {
   user: User | null;
@@ -51,7 +51,7 @@ export function AuthContextProvider({
   }, []);
 
   // when component mounts, check if the user is logged in
-  useState(() => {
+  useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL || ""}/api/users/me`)
       .then((response) => response.json())
       .then((data) => {
