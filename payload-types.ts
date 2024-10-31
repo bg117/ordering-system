@@ -91,6 +91,8 @@ export interface Admin {
  */
 export interface User {
   id: number;
+  grade: number;
+  section: string;
   updatedAt: string;
   createdAt: string;
   email: string;
