@@ -1,9 +1,27 @@
-import type { CollectionConfig } from "payload";
+import type { Access, CollectionConfig } from "payload";
+
+const isSameUserOrAdmin: Access = ({ req: { user } }) => {
+  // if user is not logged in, deny access
+  if (!user) return false;
+  // if admin, allow access
+  if (user?.collection === "admins") return true;
+
+  // find the cart that belongs to the user
+  return {
+    createdBy: {
+      equals: user.id,
+    },
+  };
+};
 
 export const CartItems: CollectionConfig = {
   slug: "cart-items",
   access: {
-    read: () => true,
+    // users can only see their own cart items
+    create: ({ req: { user } }) => !!user,
+    read: isSameUserOrAdmin,
+    update: isSameUserOrAdmin,
+    delete: isSameUserOrAdmin,
   },
   fields: [
     {
