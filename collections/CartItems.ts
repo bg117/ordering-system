@@ -1,30 +1,37 @@
-import type { Access, CollectionConfig } from "payload";
+import { CartItem } from "@/payload-types";
+import type {
+  Access,
+  CollectionBeforeChangeHook,
+  CollectionConfig,
+} from "payload";
 
-const isSameUserOrAdmin: Access = async ({ req: { user, payload } }) => {
+const isSameUserOrAdmin: Access = async ({ req: { user } }) => {
   // if user is not logged in, deny access
   if (!user) return false;
   // if admin, allow access
   if (user?.collection === "admins") return true;
 
   // find the cart that belongs to the user
-  const carts = await payload.find({
-    collection: "carts",
-    where: {
-      user: {
-        equals: user.id,
-      },
+  return {
+    user: {
+      equals: user,
     },
-    depth: 0,
-    limit: 1,
-  });
+  };
+};
 
-  return (
-    carts.totalDocs > 0 && {
-      cart: {
-        equals: carts.docs[0].id,
-      },
-    }
-  );
+const beforeChangeHook: CollectionBeforeChangeHook<CartItem> = async ({
+  operation,
+  req: { user },
+  originalDoc,
+}) => {
+  // if the user is not logged in, deny access
+  if (!user || user?.collection !== "users") return;
+  if (operation === "create" && originalDoc) {
+    // if the operation is create, set the user to the current user
+    originalDoc.user = user;
+  }
+
+  return originalDoc;
 };
 
 export const CartItems: CollectionConfig = {
@@ -41,6 +48,12 @@ export const CartItems: CollectionConfig = {
       name: "cart",
       type: "relationship",
       relationTo: "carts",
+      required: true,
+    },
+    {
+      name: "user",
+      type: "relationship",
+      relationTo: "users",
       required: true,
     },
     {
@@ -63,4 +76,7 @@ export const CartItems: CollectionConfig = {
       defaultValue: false,
     },
   ],
+  hooks: {
+    beforeChange: [beforeChangeHook],
+  },
 };
