@@ -171,6 +171,7 @@ export interface Cart {
 export interface CartItem {
   id: number;
   cart: number | Cart;
+  user: number | User;
   item: number | Item;
   quantity: number;
   placed?: boolean | null;
