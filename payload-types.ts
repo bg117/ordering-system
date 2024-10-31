@@ -19,6 +19,7 @@ export interface Config {
     carts: Cart;
     'cart-items': CartItem;
     orders: Order;
+    'order-items': OrderItem;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -174,7 +175,6 @@ export interface CartItem {
   user: number | User;
   item: number | Item;
   quantity: number;
-  placed?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -184,7 +184,20 @@ export interface CartItem {
  */
 export interface Order {
   id: number;
-  cart: number | Cart;
+  user: number | User;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "order-items".
+ */
+export interface OrderItem {
+  id: number;
+  order: number | Order;
+  user: number | User;
+  item: number | Item;
+  quantity: number;
   updatedAt: string;
   createdAt: string;
 }
@@ -222,6 +235,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'orders';
         value: number | Order;
+      } | null)
+    | ({
+        relationTo: 'order-items';
+        value: number | OrderItem;
       } | null);
   globalSlug?: string | null;
   user:
