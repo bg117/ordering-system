@@ -1,14 +1,16 @@
 "use client";
 
-import { useActionState, useCallback, useEffect, useState } from "react";
+import { useAuth } from "@/components/AuthContextProvider";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 import { Form, Button, Card, Modal, InputGroup, Alert } from "react-bootstrap";
-import { login } from "./actions";
 
 export default function Login() {
+  const router = useRouter();
   const [showModal, setShowModal] = useState<boolean | undefined>(undefined);
   const [isStudent, setIsStudent] = useState<boolean | undefined>(undefined);
-
-  const [error, loginAction] = useActionState(login, null);
+  const [error, setError] = useState<string | null>(null);
+  const { login } = useAuth();
 
   const email = isStudent ? "@r4a-2.deped.gov.ph" : "@deped.gov.ph";
 
@@ -21,6 +23,24 @@ export default function Login() {
     setIsStudent(true);
     setShowModal(false);
   }, []);
+
+  const submitForm = useCallback(
+    (formData: FormData) => {
+      const id = formData.get("id") as string;
+      const password = formData.get("password") as string;
+
+      setError(null);
+
+      try {
+        login(id + email, password);
+        router.push("/"); // Redirect to the home page after login
+      } catch (error) {
+        console.error(error);
+        setError(error.message);
+      }
+    },
+    [login, email, router]
+  );
 
   useEffect(() => {
     setShowModal(true);
@@ -55,10 +75,8 @@ export default function Login() {
       <div>
         <Card className="w-lg-50 mx-auto">
           <Card.Body>
-            <Form action={loginAction}>
-              {error && (
-                <Alert variant="danger">Error: {error}</Alert>
-              )}
+            <Form action={submitForm}>
+              {error && <Alert variant="danger">Error: {error}</Alert>}
               <h2 className="text-center mb-4">Login</h2>
               <Form.Group className="mb-2">
                 <Form.Label htmlFor="id">

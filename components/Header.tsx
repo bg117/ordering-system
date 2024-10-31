@@ -1,4 +1,6 @@
-import { getUser } from "@/utilities/user";
+"use client";
+
+import { useAuth } from "@/components/AuthContextProvider";
 import { faBasketShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -12,8 +14,8 @@ import {
   NavLink,
 } from "react-bootstrap";
 
-export default async function Header() {
-  const user = await getUser();
+export default function Header() {
+  const { user } = useAuth();
 
   return (
     <Navbar expand="lg" className="bg-primary navbar-dark">
