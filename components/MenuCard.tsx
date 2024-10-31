@@ -9,12 +9,12 @@ interface MenuCardProps {
   price?: number;
 }
 
-const MenuCard: React.FC<MenuCardProps> = ({
+export default function MenuCard({
   name,
   description,
   image,
   price,
-}) => {
+}: MenuCardProps) {
   return (
     <Card style={{ height: "100%", width: "18rem" }} className="mt-3">
       <Card.Img variant="top" src={image} alt={name} />
@@ -53,6 +53,4 @@ const MenuCard: React.FC<MenuCardProps> = ({
       </Card.Body>
     </Card>
   );
-};
-
-export default MenuCard;
+}
