@@ -1,7 +1,14 @@
 "use client";
 
 import { User } from "@/payload-types";
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { api } from "@/utilities/api";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 type AuthContextType = {
   user: User | null;
@@ -21,46 +28,31 @@ export function AuthContextProvider({
 
   const login = useCallback(async (email: string, password: string) => {
     // Call the login API
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL || ""}/users/login`,
-      {
-        method: "POST",
-        body: JSON.stringify({ email, password }),
-      }
-    );
-
-    const data = await response.json();
-
-    // If the response is not ok, throw an error
-    if (!response.ok) {
-      throw new Error(data.error.message);
-    }
+    const { user } = await api("/users/login", {
+      body: JSON.stringify({ email, password }),
+    });
 
     // Set the user state
-    setUser(data.user);
+    setUser(user);
   }, []);
 
   const logout = useCallback(async () => {
     // Call the logout API
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL || ""}/users/logout`, {
-      method: "POST",
-    });
-
+    await api("/users/logout");
     // Set the user state to null
     setUser(null);
   }, []);
 
   // when component mounts, check if the user is logged in
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL || ""}/users/me`)
-      .then((response) => response.json())
+    api("/users/me", { method: "GET" })
       .then((data) => {
         setUser(data.user);
       })
       .catch(() => {
         setUser(null);
       });
-  });
+  }, []);
 
   return (
     <AuthContext.Provider value={{ user, setUser, login, logout }}>
