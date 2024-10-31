@@ -16,35 +16,16 @@ export default function MenuCard({
   price,
 }: MenuCardProps) {
   return (
-    <Card style={{ height: "100%", width: "18rem" }} className="mt-3">
+    <Card className="h-100 col-12 col-sm-6 col-md-4 col-lg-3">
       <Card.Img variant="top" src={image} alt={name} />
-      <Card.Body
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          height: "100%",
-        }}
-      >
-        <div>
+      <Card.Body>
+        <div className="mb-3">
           <Card.Title>{name}</Card.Title>
           <Card.Text>{description}</Card.Text>
         </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
+        <div className="d-flex justify-content-between align-items-center">
           {price !== undefined && (
-            <span
-              style={{
-                fontWeight: "normal",
-                color: "black",
-                fontSize: "1.25rem",
-              }}
-            >
+            <span className="fw-normal text-black fs-4">
               ₱{price.toFixed(2)}
             </span>
           )}
