@@ -15,7 +15,7 @@ import {
 } from "react-bootstrap";
 
 export default function Header() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   return (
     <Navbar expand="lg" className="bg-primary navbar-dark">
@@ -41,7 +41,7 @@ export default function Header() {
                     </Badge>
                   </div>
                 </NavLink>
-                <NavLink href="/logout" active>
+                <NavLink href="#" active onClick={logout}>
                   Log Out
                 </NavLink>
               </>
