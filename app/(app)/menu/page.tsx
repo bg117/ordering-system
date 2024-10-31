@@ -1,6 +1,6 @@
 "use client";
 
-import MenuCard from "../../components/MenuCard";
+import MenuCard from "../../../components/MenuCard";
 
 export default function Menu() {
   return (
