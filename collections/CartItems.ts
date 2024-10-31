@@ -70,11 +70,6 @@ export const CartItems: CollectionConfig = {
       defaultValue: 1,
       min: 1,
     },
-    {
-      name: "placed", // Determines if the item has been ordered
-      type: "checkbox",
-      defaultValue: false,
-    },
   ],
   hooks: {
     beforeChange: [beforeChangeHook],
