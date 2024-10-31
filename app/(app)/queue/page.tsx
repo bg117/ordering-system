@@ -2,7 +2,7 @@
 
 "use client";
 
-import QueueOrders from "../../components/QueueOrders"; // Adjust path if needed
+import QueueOrders from "@/components/QueueOrders"; // Adjust path if needed
 
 const orders = [
   {
