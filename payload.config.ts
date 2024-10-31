@@ -1,20 +1,21 @@
 // storage-adapter-import-placeholder
-import { postgresAdapter } from '@payloadcms/db-postgres'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import path from 'path'
-import { buildConfig } from 'payload'
-import { fileURLToPath } from 'url'
-import sharp from 'sharp'
+import { postgresAdapter } from "@payloadcms/db-postgres";
+import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import path from "path";
+import { buildConfig } from "payload";
+import { fileURLToPath } from "url";
+import sharp from "sharp";
 
-import { Users } from './collections/Users'
-import { Media } from './collections/Media'
-import { Admins } from './collections/Admins'
-import { Items } from './collections/Items'
-import { Cart } from './collections/Cart'
-import { CartItems } from './collections/CartItems'
+import { Users } from "./collections/Users";
+import { Media } from "./collections/Media";
+import { Admins } from "./collections/Admins";
+import { Items } from "./collections/Items";
+import { Cart } from "./collections/Cart";
+import { CartItems } from "./collections/CartItems";
+import { Queue } from "./collections/Queue";
 
-const filename = fileURLToPath(import.meta.url)
-const dirname = path.dirname(filename)
+const filename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(filename);
 
 export default buildConfig({
   admin: {
@@ -23,19 +24,19 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Admins, Users, Media, Items, Cart, CartItems],
+  collections: [Admins, Users, Media, Items, Cart, CartItems, Queue],
   editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET || '',
+  secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
-    outputFile: path.resolve(dirname, 'payload-types.ts'),
+    outputFile: path.resolve(dirname, "payload-types.ts"),
   },
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI || '',
+      connectionString: process.env.DATABASE_URI || "",
     },
   }),
   sharp,
   plugins: [
     // storage-adapter-placeholder
   ],
-})
+});
