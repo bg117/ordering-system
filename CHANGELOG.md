@@ -1,3 +1,21 @@
+## 0.5.0 (2024-10-31)
+
+### Feat
+
+- add TanStack react-query
+- create new OrderItems table
+- **CartItems**: add user as field in CartItems
+- **Users**: create new Cart whenever a new User is created
+
+### Fix
+
+- update payload types
+- update payload types
+- **CartItems**: remove placed column
+- **Orders**: use users instead of carts as identifier
+- **CartItems**: fix access control for RUD
+- add access control
+
 ## 0.4.0 (2024-10-31)
 
 ### Feat
