@@ -63,8 +63,8 @@ export default function Login() {
                   {isStudent === undefined
                     ? "Are you a student or a canteen staff?"
                     : isStudent
-                    ? "Learner's Reference Number"
-                    : "Employee Number"}
+                      ? "Learner's Reference Number"
+                      : "Employee Number"}
                 </Form.Label>
                 <InputGroup>
                   <Form.Control type="text" name="id" required />

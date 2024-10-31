@@ -37,8 +37,7 @@ const orders = [
     items: ["malinis na utak", "grade 9"],
     instructions: "none",
     cutlery: true,
-  }
-  
+  },
 ];
 
 export default function QueuePage() {

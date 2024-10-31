@@ -57,16 +57,29 @@ export default function QueueOrders({ orders }: QueueOrdersProps) {
           </Card.Header>
           <Collapse in={openOrders.includes(order.id)}>
             <Card.Body>
-              <p><strong>Order Details:</strong></p>
-              <p><span role="img" aria-label="grade-level-section">🏫</span> {order.gradeLevelAndSection}</p>
+              <p>
+                <strong>Order Details:</strong>
+              </p>
+              <p>
+                <span role="img" aria-label="grade-level-section">
+                  🏫
+                </span>{" "}
+                {order.gradeLevelAndSection}
+              </p>
               <ul>
                 {order.items.map((item, index) => (
                   <li key={index}>{item}</li>
                 ))}
               </ul>
-              <p><strong>Special Instructions:</strong> {order.instructions}</p>
-              <p><strong>Cutlery:</strong> {order.cutlery ? "Yes" : "No"}</p>
-              <p><strong>Expected Price:</strong> ₱{order.price.toFixed(2)}</p>
+              <p>
+                <strong>Special Instructions:</strong> {order.instructions}
+              </p>
+              <p>
+                <strong>Cutlery:</strong> {order.cutlery ? "Yes" : "No"}
+              </p>
+              <p>
+                <strong>Expected Price:</strong> ₱{order.price.toFixed(2)}
+              </p>
               <Row className="mt-3">
                 <Col xs={4}>
                   <Button variant="dark" className="w-100">
