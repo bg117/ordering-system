@@ -1,24 +1,32 @@
-## 0.3.0 (2024-10-31)
+## 0.4.0 (2024-10-31)
 
 ### Feat
 
+- **Header**: enable logout
+- add AuthContextProvider
+- **CartItems**: add placed column in cart item
+- create new queue table
 - add separate cart items table
 - add carts table
 - add new Items table for food
 - **Users**: add grade and section columns
 - add new users table
+- add PayloadCMS
 
 ### Fix
 
+- **AuthContextProvider**: fix api link
+- **AuthContextProvider**: replace useState with useEffect
+- **Orders**: rename Queue to Orders
+- **Carts**: rename Cart to Carts
 - **Cart**: remove items relation from table
 - **globals.scss**: remove erroneous bootstrap import
 
 ### Refactor
 
+- **utilities/api.ts**: refactor API fetch into separate function
+- **utilities/payload**: remove utilities/payload/index.ts
+- delete utilities/user.ts
+- **Layout**: use useAuth for getting user data
+- replace supabase auth with Payload auth
 - **MenuCard**: change arrow function into normal function
-
-## 0.2.0 (2024-10-31)
-
-### Feat
-
-- add PayloadCMS
