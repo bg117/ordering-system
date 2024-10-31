@@ -22,7 +22,7 @@ export function AuthContextProvider({
   const login = useCallback(async (email: string, password: string) => {
     // Call the login API
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL || ""}/api/users/login`,
+      `${process.env.NEXT_PUBLIC_API_URL || ""}/users/login`,
       {
         method: "POST",
         body: JSON.stringify({ email, password }),
@@ -42,7 +42,7 @@ export function AuthContextProvider({
 
   const logout = useCallback(async () => {
     // Call the logout API
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL || ""}/api/users/logout`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL || ""}/users/logout`, {
       method: "POST",
     });
 
@@ -52,7 +52,7 @@ export function AuthContextProvider({
 
   // when component mounts, check if the user is logged in
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL || ""}/api/users/me`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || ""}/users/me`)
       .then((response) => response.json())
       .then((data) => {
         setUser(data.user);
