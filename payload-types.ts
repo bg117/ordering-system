@@ -173,6 +173,7 @@ export interface CartItem {
   cart: number | Cart;
   item: number | Item;
   quantity: number;
+  placed?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }

@@ -17,6 +17,7 @@ export const CartItems: CollectionConfig = {
       type: "relationship",
       relationTo: "items",
       required: true,
+      unique: true, // Only one of each item in a cart (quantity is separate)
     },
     {
       name: "quantity",
@@ -24,6 +25,11 @@ export const CartItems: CollectionConfig = {
       required: true,
       defaultValue: 1,
       min: 1,
+    },
+    {
+      name: "placed", // Determines if the item has been ordered
+      type: "checkbox",
+      defaultValue: false,
     },
   ],
 };
