@@ -3,6 +3,7 @@ import { Afacad } from "next/font/google";
 import "./globals.scss";
 import Page from "@/components/Page";
 import { AuthContextProvider } from "@/components/AuthContextProvider";
+import QueryClientProvider from "@/components/QueryClientProvider";
 
 const font = Afacad({
   weight: ["400", "500", "600", "700"],
@@ -21,11 +22,13 @@ export default function RootLayout({
 }>) {
   return (
     <AuthContextProvider>
-      <html lang="en">
-        <body className={`${font.className}`}>
-          <Page>{children}</Page>
-        </body>
-      </html>
+      <QueryClientProvider>
+        <html lang="en">
+          <body className={`${font.className}`}>
+            <Page>{children}</Page>
+          </body>
+        </html>
+      </QueryClientProvider>
     </AuthContextProvider>
   );
 }
