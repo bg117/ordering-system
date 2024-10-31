@@ -18,7 +18,7 @@ export interface Config {
     items: Item;
     carts: Cart;
     'cart-items': CartItem;
-    queue: Queue;
+    orders: Order;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -178,9 +178,9 @@ export interface CartItem {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "queue".
+ * via the `definition` "orders".
  */
-export interface Queue {
+export interface Order {
   id: number;
   cart: number | Cart;
   updatedAt: string;
@@ -218,8 +218,8 @@ export interface PayloadLockedDocument {
         value: number | CartItem;
       } | null)
     | ({
-        relationTo: 'queue';
-        value: number | Queue;
+        relationTo: 'orders';
+        value: number | Order;
       } | null);
   globalSlug?: string | null;
   user:

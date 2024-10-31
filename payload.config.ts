@@ -12,7 +12,7 @@ import { Admins } from "./collections/Admins";
 import { Items } from "./collections/Items";
 import { Carts } from "./collections/Carts";
 import { CartItems } from "./collections/CartItems";
-import { Queue } from "./collections/Queue";
+import { Orders } from "./collections/Orders";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -24,7 +24,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Admins, Users, Media, Items, Carts, CartItems, Queue],
+  collections: [Admins, Users, Media, Items, Carts, CartItems, Orders],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
