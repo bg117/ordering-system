@@ -3,13 +3,13 @@ import type { CollectionConfig } from "payload";
 export const Orders: CollectionConfig = {
   slug: "orders",
   access: {
-    read: () => true,
+    create: ({ req: { user } }) => !!user,
   },
   fields: [
     {
-      name: "cart",
+      name: "user",
       type: "relationship",
-      relationTo: "carts",
+      relationTo: "users",
       required: true,
     },
   ],
