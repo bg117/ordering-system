@@ -17,6 +17,7 @@ export interface Config {
     media: Media;
     items: Item;
     cart: Cart;
+    'cart-items': CartItem;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -165,6 +166,18 @@ export interface Cart {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cart-items".
+ */
+export interface CartItem {
+  id: number;
+  cart: number | Cart;
+  item: number | Item;
+  quantity: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -189,6 +202,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'cart';
         value: number | Cart;
+      } | null)
+    | ({
+        relationTo: 'cart-items';
+        value: number | CartItem;
       } | null);
   globalSlug?: string | null;
   user:
