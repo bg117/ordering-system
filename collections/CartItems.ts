@@ -9,7 +9,7 @@ export const CartItems: CollectionConfig = {
     {
       name: "cart",
       type: "relationship",
-      relationTo: "cart",
+      relationTo: "carts",
       required: true,
     },
     {

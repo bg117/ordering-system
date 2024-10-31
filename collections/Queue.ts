@@ -9,7 +9,7 @@ export const Queue: CollectionConfig = {
     {
       name: "cart",
       type: "relationship",
-      relationTo: "cart",
+      relationTo: "carts",
       required: true,
     },
   ],

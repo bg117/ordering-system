@@ -10,7 +10,7 @@ import { Users } from "./collections/Users";
 import { Media } from "./collections/Media";
 import { Admins } from "./collections/Admins";
 import { Items } from "./collections/Items";
-import { Cart } from "./collections/Cart";
+import { Carts } from "./collections/Carts";
 import { CartItems } from "./collections/CartItems";
 import { Queue } from "./collections/Queue";
 
@@ -24,7 +24,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Admins, Users, Media, Items, Cart, CartItems, Queue],
+  collections: [Admins, Users, Media, Items, Carts, CartItems, Queue],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {

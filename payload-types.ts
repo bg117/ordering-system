@@ -16,7 +16,7 @@ export interface Config {
     users: User;
     media: Media;
     items: Item;
-    cart: Cart;
+    carts: Cart;
     'cart-items': CartItem;
     queue: Queue;
     'payload-locked-documents': PayloadLockedDocument;
@@ -156,7 +156,7 @@ export interface Item {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "cart".
+ * via the `definition` "carts".
  */
 export interface Cart {
   id: number;
@@ -210,7 +210,7 @@ export interface PayloadLockedDocument {
         value: number | Item;
       } | null)
     | ({
-        relationTo: 'cart';
+        relationTo: 'carts';
         value: number | Cart;
       } | null)
     | ({
