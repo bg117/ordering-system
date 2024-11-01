@@ -8,7 +8,7 @@ const isSameUserOrAdmin: Access = async ({ req: { user } }) => {
 
   return {
     user: {
-      equals: user,
+      equals: user.id,
     },
   };
 };

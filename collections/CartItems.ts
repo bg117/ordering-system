@@ -14,7 +14,7 @@ const isSameUserOrAdmin: Access = async ({ req: { user } }) => {
   // find the cart that belongs to the user
   return {
     user: {
-      equals: user,
+      equals: user.id,
     },
   };
 };
