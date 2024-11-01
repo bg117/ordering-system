@@ -1,8 +1,10 @@
 "use client";
 
 import { useAuth } from "@/components/AuthContextProvider";
+import { api } from "@/utilities/api";
 import { faBasketShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useQuery } from "@tanstack/react-query";
 import {
   Navbar,
   Container,
@@ -16,6 +18,17 @@ import {
 
 export default function Header() {
   const { user, logout } = useAuth();
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["cart-items", "count"],
+    queryFn: async () => {
+      const response = await api("/cart-items/count", { method: "GET" });
+      return response;
+    },
+  });
+
+  if (isError) {
+    throw error;
+  }
 
   return (
     <Navbar expand="lg" className="bg-primary navbar-dark">
@@ -33,14 +46,16 @@ export default function Header() {
           <Nav className="ms-auto">
             {user ? (
               <>
-                <NavLink href="/cart" active>
-                  <div className="d-flex align-items-center">
-                    <FontAwesomeIcon icon={faBasketShopping} className="fs-4" />
-                    <Badge bg="secondary" className="ms-1">
-                      0
-                    </Badge>
-                  </div>
-                </NavLink>
+                {!isLoading && data && (
+                  <NavLink href="/cart" active>
+                    <div className="d-flex align-items-center">
+                      <FontAwesomeIcon icon={faBasketShopping} className="fs-4" />
+                      <Badge bg="secondary" className="ms-1">
+                        {data.totalDocs}
+                      </Badge>
+                    </div>
+                  </NavLink>
+                )}
                 <NavLink href="#" active onClick={logout}>
                   Log Out
                 </NavLink>
