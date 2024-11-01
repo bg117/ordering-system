@@ -23,15 +23,16 @@ export default function Menu() {
     <main className="container">
       <h1>Menu</h1>
 
-      <div className="row d-flex justify-content-start g-4">
+      <div className="row g-4">
         {data.docs.map(({ id, name, description, price, image }) => (
-          <MenuCard
-            key={id}
-            name={name}
-            description={JSON.stringify(description)}
-            price={price}
-            image={(image as Media).url || ""}
-          />
+          <div key={id} className="col-12 col-sm-6 col-md-4 col-lg-3">
+            <MenuCard
+              name={name}
+              description={JSON.stringify(description)}
+              price={price}
+              image={(image as Media).url || ""}
+            />
+          </div>
         ))}
       </div>
     </main>

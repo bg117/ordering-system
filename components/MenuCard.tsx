@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, CardBody, CardImg, CardText, CardTitle } from "react-bootstrap";
 
 interface MenuCardProps {
   name: string;
@@ -16,12 +16,12 @@ export default function MenuCard({
   price,
 }: MenuCardProps) {
   return (
-    <Card className="h-100 col-12 col-sm-6 col-md-4 col-lg-3">
-      <Card.Img variant="top" src={image} alt={name} />
-      <Card.Body>
+    <Card className="h-100">
+      <CardImg variant="top" src={image} alt={name} />
+      <CardBody>
         <div className="mb-3">
-          <Card.Title>{name}</Card.Title>
-          <Card.Text>{description}</Card.Text>
+          <CardTitle>{name}</CardTitle>
+          <CardText>{description}</CardText>
         </div>
         <div className="d-flex justify-content-between align-items-center">
           {price !== undefined && (
@@ -31,7 +31,7 @@ export default function MenuCard({
           )}
           <Button variant="primary">Add to Cart</Button>
         </div>
-      </Card.Body>
+      </CardBody>
     </Card>
   );
 }
