@@ -18,12 +18,12 @@ export default function MenuCard({
   return (
     <Card className="h-100">
       <CardImg variant="top" src={image} alt={name} />
-      <CardBody>
+      <CardBody className="d-flex h-100 flex-column">
         <div className="mb-3">
           <CardTitle>{name}</CardTitle>
           <CardText>{description}</CardText>
         </div>
-        <div className="d-flex justify-content-between align-items-center">
+        <div className="d-flex justify-content-between align-items-center mt-auto">
           {price !== undefined && (
             <span className="fw-normal text-black fs-4">
               ₱{price.toFixed(2)}
