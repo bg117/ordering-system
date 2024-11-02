@@ -17,7 +17,7 @@ export default function Menu() {
   });
 
   if (isLoading || !data) return <div>Loading...</div>;
-  if (isError) return <div>Error: {error.message}</div>;
+  if (isError) throw error;
 
   return (
     <main className="container">
@@ -27,6 +27,7 @@ export default function Menu() {
         {data.docs.map(({ id, name, description, price, image }) => (
           <div key={id} className="col-12 col-sm-6 col-md-4 col-lg-3">
             <MenuCard
+              id={id}
               name={name}
               description={JSON.stringify(description)}
               price={price}
