@@ -18,7 +18,7 @@ import {
 
 export default function Header() {
   const { user, logout } = useAuth();
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["cart-items", "count"],
     queryFn: async () => {
       const response = await api("/cart-items/count", { method: "GET" });
@@ -26,9 +26,6 @@ export default function Header() {
     },
   });
 
-  if (isError) {
-    throw error;
-  }
 
   return (
     <Navbar expand="lg" className="bg-primary navbar-dark">
