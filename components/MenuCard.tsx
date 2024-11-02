@@ -52,7 +52,7 @@ export default function MenuCard({
 
   // check if item is already in the cart
   // if it is, disable the button
-  const { data: cartItems, isError: isQueryError, error: queryError } = useQuery({
+  const { data: cartItems } = useQuery({
     queryKey: ["cart-items"],
     queryFn: async () => {
       const response = await api(`/cart-items/count?${cartItemQuery}`, { method: "GET" });
@@ -73,10 +73,6 @@ export default function MenuCard({
     throw error;
   }
 
-  if (isQueryError) {
-    throw queryError;
-  }
-
   return (
     <Card className="h-100">
       <CardImg variant="top" src={image} alt={name} />
@@ -93,9 +89,9 @@ export default function MenuCard({
           )}
           <Button variant="primary"
             onClick={addNewItem}
-            disabled={isPending || cartItems?.totalDocs > 0}
-            aria-disabled={isPending || cartItems?.totalDocs > 0}>
-            {cartItems?.totalDocs > 0
+            disabled={isPending || !!user && cartItems?.totalDocs > 0}
+            aria-disabled={isPending || !!user && cartItems?.totalDocs > 0}>
+            {user && cartItems?.totalDocs > 0
               ? "Item in Cart"
               : isPending
                 ? "Adding..."
