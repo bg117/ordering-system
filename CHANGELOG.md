@@ -1,3 +1,27 @@
+## 0.6.0 (2024-11-02)
+
+### BREAKING CHANGE
+
+- Remove carts table and leave only CartItems
+
+### Feat
+
+- **MenuCard**: add proper add to card functionality
+- remove Carts table
+- **Menu**: fetch menu items from API
+
+### Fix
+
+- **Header**: remove throw when querying CartItems
+- **Header**: get actual cart items count
+- use id in query object
+- **MenuCard**: move price and add to cart to bottom
+- **MenuCard**: fix menu card rendering
+
+### Refactor
+
+- remove test data
+
 ## 0.5.0 (2024-10-31)
 
 ### Feat
