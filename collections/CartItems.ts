@@ -1,9 +1,4 @@
-import { CartItem } from "@/payload-types";
-import type {
-  Access,
-  CollectionBeforeChangeHook,
-  CollectionConfig,
-} from "payload";
+import type { Access, CollectionConfig } from "payload";
 
 const isSameUserOrAdmin: Access = async ({ req: { user } }) => {
   // if user is not logged in, deny access
@@ -19,21 +14,6 @@ const isSameUserOrAdmin: Access = async ({ req: { user } }) => {
   };
 };
 
-const beforeChangeHook: CollectionBeforeChangeHook<CartItem> = async ({
-  operation,
-  req: { user },
-  originalDoc,
-}) => {
-  // if the user is not logged in, deny access
-  if (!user || user?.collection !== "users") return;
-  if (operation === "create" && originalDoc) {
-    // if the operation is create, set the user to the current user
-    originalDoc.user = user;
-  }
-
-  return originalDoc;
-};
-
 export const CartItems: CollectionConfig = {
   slug: "cart-items",
   access: {
@@ -44,12 +24,6 @@ export const CartItems: CollectionConfig = {
     delete: isSameUserOrAdmin,
   },
   fields: [
-    {
-      name: "cart",
-      type: "relationship",
-      relationTo: "carts",
-      required: true,
-    },
     {
       name: "user",
       type: "relationship",
@@ -71,7 +45,4 @@ export const CartItems: CollectionConfig = {
       min: 1,
     },
   ],
-  hooks: {
-    beforeChange: [beforeChangeHook],
-  },
 };

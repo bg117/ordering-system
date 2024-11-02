@@ -10,7 +10,6 @@ import { Users } from "./collections/Users";
 import { Media } from "./collections/Media";
 import { Admins } from "./collections/Admins";
 import { Items } from "./collections/Items";
-import { Carts } from "./collections/Carts";
 import { CartItems } from "./collections/CartItems";
 import { Orders } from "./collections/Orders";
 import { OrderItems } from "./collections/OrderItems";
@@ -30,7 +29,6 @@ export default buildConfig({
     Users,
     Media,
     Items,
-    Carts,
     CartItems,
     Orders,
     OrderItems,
