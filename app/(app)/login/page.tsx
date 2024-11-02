@@ -36,7 +36,7 @@ export default function Login() {
         router.push("/"); // Redirect to the home page after login
       } catch (error) {
         console.error(error);
-        setError(error.message);
+        setError((error as Error).message);
       }
     },
     [login, email, router]
