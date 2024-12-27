@@ -11,8 +11,8 @@ import {
 } from "react";
 
 type AuthContextType = {
-  user: User | null;
-  setUser: (user: User | null) => void;
+  user: User | null | undefined;
+  setUser: (user: User | null | undefined) => void;
   login: (email: string, password: string) => void;
   logout: () => void;
 };
@@ -24,7 +24,7 @@ export function AuthContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null | undefined>(undefined);
 
   const login = useCallback(async (email: string, password: string) => {
     // Call the login API
