@@ -53,7 +53,7 @@ export default function MenuCard({
   // check if item is already in the cart
   // if it is, disable the button
   const { data: cartItems } = useQuery({
-    queryKey: ["cart-items"],
+    queryKey: ["cart-items", id],
     queryFn: async () => {
       const response = await api(`/cart-items/count?${cartItemQuery}`, { method: "GET" });
       return response;
