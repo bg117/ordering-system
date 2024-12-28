@@ -20,8 +20,9 @@ const CartItem: React.FC<CartItemProps> = ({
           type="number"
           defaultValue={quantity}
           style={{
-            width: "50px",
+            width: "40px",
           }}
+          className="me-2"
           onBlur={(e) => onChangeQuantity(Number.parseInt(e.target.value))}
         ></input>
         {name}
