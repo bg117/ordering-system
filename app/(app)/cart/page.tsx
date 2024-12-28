@@ -27,12 +27,29 @@ export default function CartPage() {
   });
 
   // mutation to update quantity of cart item
-  const { mutate } = useMutation({
+  const { mutate: update } = useMutation({
     mutationKey: ["cart-items"],
     mutationFn: async ({ id, quantity }: { id: number; quantity: number }) => {
       const response = await api(`/cart-items/${id}`, {
         method: "PATCH",
         body: JSON.stringify({ quantity }),
+      });
+      return response;
+    },
+    onSuccess: () => {
+      return queryClient.invalidateQueries({ queryKey: ["cart-items"] });
+    },
+    onError: (error) => {
+      throw error;
+    },
+  });
+
+  // mutation to remove item from cart
+  const { mutate: remove } = useMutation({
+    mutationKey: ["cart-items"],
+    mutationFn: async (id: number) => {
+      const response = await api(`/cart-items/${id}`, {
+        method: "DELETE",
       });
       return response;
     },
@@ -90,7 +107,10 @@ export default function CartPage() {
                     quantity={item.quantity}
                     price={(item.item as Item).price}
                     onChangeQuantity={(quantity) => {
-                      mutate({ id: item.id, quantity });
+                      update({ id: item.id, quantity });
+                    }}
+                    onDelete={() => {
+                      remove(item.id);
                     }}
                   />
                 ))}
