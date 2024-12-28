@@ -40,10 +40,10 @@ const orders = [
   },
 ];
 
-export default function QueuePage() {
+export default function OrdersPage() {
   return (
-    <div className="container mt-5">
-      <h2 className="mb-4">Queue</h2>
+    <div className="container">
+      <h2 className="mb-4">Orders</h2>
       <QueueOrders orders={orders} />
     </div>
   );
