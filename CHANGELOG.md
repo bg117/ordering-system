@@ -1,3 +1,9 @@
+## 0.8.2 (2024-12-28)
+
+### Fix
+
+- use redirect while rendering
+
 ## 0.8.1 (2024-12-28)
 
 ### Fix
