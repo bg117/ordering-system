@@ -1,3 +1,10 @@
+## 0.8.1 (2024-12-28)
+
+### Fix
+
+- margins
+- remove unnecessary fields
+
 ## 0.8.0 (2024-12-28)
 
 ### Feat
