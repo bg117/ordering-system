@@ -23,7 +23,7 @@ export default function Menu() {
     <main className="container">
       <h1>Menu</h1>
 
-      <div className="row g-4">
+      <div className="row g-2 mt-1">
         {data.docs.map(({ id, name, description, price, image }) => (
           <div key={id} className="col-12 col-sm-6 col-md-4 col-lg-3">
             <MenuCard

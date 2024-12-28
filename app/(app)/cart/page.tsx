@@ -149,8 +149,9 @@ export default function CartPage() {
   }
 
   return (
-    <div className="container mt-5">
-      <Row className="g-3">
+    <div className="container">
+      <h1>Cart</h1>
+      <Row className="g-2 mt-1">
         <Col md={8}>
           <Card>
             <Card.Body>
