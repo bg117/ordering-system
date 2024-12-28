@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { PaginatedDocs } from "payload";
 import { useCallback, useState } from "react";
 import { Row, Col, Card } from "react-bootstrap";
+import qs from "qs";
 
 export default function CartPage() {
   const { user } = useAuth();
@@ -91,9 +92,25 @@ export default function CartPage() {
           body: JSON.stringify(orderItem),
         });
       }
+
+      const query = qs.stringify(
+        {
+          where: {
+            user: {
+              equals: user?.id,
+            },
+          },
+        },
+        { addQueryPrefix: false }
+      );
+      // clear cart of user
+      await api(`/cart-items?${query}`, {
+        method: "DELETE",
+      });
     },
     onSuccess: () => {
       router.push("/thank-you");
+      return queryClient.invalidateQueries({ queryKey: ["cart-items"] });
     },
     onError: (error) => {
       throw error;
