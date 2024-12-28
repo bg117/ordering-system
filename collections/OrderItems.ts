@@ -30,12 +30,6 @@ export const OrderItems: CollectionConfig = {
       required: true,
     },
     {
-      name: "user",
-      type: "relationship",
-      relationTo: "users",
-      required: true,
-    },
-    {
       name: "item",
       type: "relationship",
       relationTo: "items",

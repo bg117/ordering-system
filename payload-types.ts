@@ -184,7 +184,6 @@ export interface Order {
 export interface OrderItem {
   id: number;
   order: number | Order;
-  user: number | User;
   item: number | Item;
   quantity: number;
   updatedAt: string;
