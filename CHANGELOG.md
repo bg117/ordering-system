@@ -1,3 +1,13 @@
+## 0.9.0 (2024-12-28)
+
+### Feat
+
+- add admin access
+
+### Fix
+
+- rename queue as orders
+
 ## 0.8.2 (2024-12-28)
 
 ### Fix
