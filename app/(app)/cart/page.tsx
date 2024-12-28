@@ -74,7 +74,7 @@ export default function CartPage() {
 
   return (
     <div className="container mt-5">
-      <Row>
+      <Row className="g-3">
         <Col md={8}>
           <Card>
             <Card.Body>
