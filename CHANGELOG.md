@@ -1,3 +1,17 @@
+## 0.8.0 (2024-12-28)
+
+### Feat
+
+- remove cart items when order placed
+- allow placing of orders
+- add "extra instructions" column in Orders table
+- add thank you page
+
+### Fix
+
+- remove unique in order items
+- remove user column from order items
+
 ## 0.7.0 (2024-12-28)
 
 ### Feat
