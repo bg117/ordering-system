@@ -12,5 +12,9 @@ export const Orders: CollectionConfig = {
       relationTo: "users",
       required: true,
     },
+    {
+      name: "extraInstructions",
+      type: "text",
+    },
   ],
 };

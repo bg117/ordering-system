@@ -173,6 +173,7 @@ export interface CartItem {
 export interface Order {
   id: number;
   user: number | User;
+  extraInstructions?: string | null;
   updatedAt: string;
   createdAt: string;
 }
