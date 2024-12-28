@@ -8,13 +8,14 @@ import { api } from "@/utilities/api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { PaginatedDocs } from "payload";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { Row, Col, Card } from "react-bootstrap";
 
 export default function CartPage() {
   const { user } = useAuth();
   const router = useRouter();
   const queryClient = useQueryClient();
+  const [instructions, setInstructions] = useState("");
 
   const { data, isLoading, isError, error } = useQuery<
     PaginatedDocs<CartItemType>
@@ -61,7 +62,44 @@ export default function CartPage() {
     },
   });
 
+  // submit order to /api/orders
   const cartItems = data?.docs;
+  const { mutate: submitOrder } = useMutation({
+    mutationKey: ["orders"],
+    mutationFn: async () => {
+      // get all cart items
+      if (!cartItems) return;
+
+      const response = await api("/orders", {
+        method: "POST",
+        body: JSON.stringify({ instructions, user: user?.id }),
+      });
+      // get the order id
+      const orderId = response.doc.id;
+
+      // create order items
+      const orderItems = cartItems.map((item) => ({
+        order: orderId,
+        item: (item.item as Item).id,
+        quantity: item.quantity,
+      }));
+
+      // create order items
+      for (const orderItem of orderItems) {
+        await api("/order-items", {
+          method: "POST",
+          body: JSON.stringify(orderItem),
+        });
+      }
+    },
+    onSuccess: () => {
+      router.push("/thank-you");
+    },
+    onError: (error) => {
+      throw error;
+    },
+  });
+
   const calculateTotal = useCallback(() => {
     if (!cartItems)
       throw new Error("Cart items are not loaded yet. Please wait...");
@@ -72,6 +110,10 @@ export default function CartPage() {
       )
       .toFixed(2);
   }, [cartItems]);
+
+  const onChangeInstructions = useCallback((instructions: string) => {
+    setInstructions(instructions);
+  }, []);
 
   if (user === null) {
     router.push("/login");
@@ -125,7 +167,11 @@ export default function CartPage() {
         </Col>
 
         <Col md={4}>
-          <ExtraInstructionsCard />
+          <ExtraInstructionsCard
+            instructions={instructions}
+            onChangeInstructions={onChangeInstructions}
+            onSubmit={submitOrder}
+          />
         </Col>
       </Row>
     </div>
