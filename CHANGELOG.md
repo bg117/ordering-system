@@ -1,3 +1,20 @@
+## 0.7.0 (2024-12-28)
+
+### Feat
+
+- add remove item functionality
+- allow user to change quantity of orders
+- read from API cart items
+- differentiate between unloaded user and no user
+
+### Fix
+
+- spacing in Additional Instructions below md
+- margin after quantity control
+- add to item should only trigger for single menu item
+- **Login**: cast error type
+- **MenuCard**: remove throw in menu card when fetching cart items
+
 ## 0.6.0 (2024-11-02)
 
 ### BREAKING CHANGE
