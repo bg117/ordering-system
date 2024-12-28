@@ -6,7 +6,7 @@ import ExtraInstructionsCard from "@/components/ExtraInstructionsCard";
 import { CartItem as CartItemType, Item } from "@/payload-types";
 import { api } from "@/utilities/api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useRouter, redirect } from "next/navigation";
 import { PaginatedDocs } from "payload";
 import { useCallback, useState } from "react";
 import { Row, Col, Card } from "react-bootstrap";
@@ -133,7 +133,7 @@ export default function CartPage() {
   }, []);
 
   if (user === null) {
-    router.push("/login");
+    return redirect("/login");
   }
 
   if (isLoading || !data || user === undefined) {
