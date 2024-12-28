@@ -6,6 +6,8 @@ import { api } from "@/utilities/api";
 import MenuCard from "@/components/MenuCard";
 import { PaginatedDocs } from "payload";
 import { Item, Media } from "@/payload-types";
+import { useAuth } from "@/components/AuthContextProvider";
+import Link from "next/link";
 
 export default function Menu() {
   const { data, isLoading, isError, error } = useQuery<PaginatedDocs<Item>>({
@@ -15,6 +17,20 @@ export default function Menu() {
       return response;
     },
   });
+
+  const { user, isAdmin } = useAuth();
+
+  if (!!user && isAdmin) {
+    return (
+      <main>
+        <h1>Menu</h1>
+        <p>
+          Admins cannot view the menu. Access items through the{" "}
+          <Link href="/admin">Admin Panel</Link>.
+        </p>
+      </main>
+    );
+  }
 
   if (isLoading || !data) return <div>Loading...</div>;
   if (isError) throw error;

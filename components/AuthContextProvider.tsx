@@ -1,6 +1,6 @@
 "use client";
 
-import { User } from "@/payload-types";
+import { Admin, User } from "@/payload-types";
 import { api } from "@/utilities/api";
 import {
   createContext,
@@ -11,41 +11,53 @@ import {
 } from "react";
 
 type AuthContextType = {
-  user: User | null | undefined;
-  setUser: (user: User | null | undefined) => void;
-  login: (email: string, password: string) => void;
+  user: User | Admin | null | undefined;
+  isAdmin: boolean;
+  setUser: (user: User | Admin | null | undefined) => void;
+  login: (email: string, password: string, admin: boolean) => void;
   logout: () => void;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+function userRoute(admin: boolean, route: string) {
+  return admin ? `/admins/${route}` : `/users/${route}`;
+}
 
 export function AuthContextProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [user, setUser] = useState<User | null | undefined>(undefined);
+  const [user, setUser] = useState<User | Admin | null | undefined>(undefined);
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  const login = useCallback(async (email: string, password: string) => {
-    // Call the login API
-    const { user } = await api("/users/login", {
-      body: JSON.stringify({ email, password }),
-    });
+  const login = useCallback(
+    async (email: string, password: string, admin: boolean) => {
+      // Call the login API
+      const { user } = await api(userRoute(admin, "login"), {
+        body: JSON.stringify({ email, password }),
+      });
 
-    // Set the user state
-    setUser(user);
-  }, []);
+      // Set the user state
+      setUser(user);
+      setIsAdmin(admin);
+      localStorage.setItem("isAdmin", admin.toString());
+    },
+    []
+  );
 
   const logout = useCallback(async () => {
     // Call the logout API
-    await api("/users/logout");
+    await api(userRoute(isAdmin, "logout"));
     // Set the user state to null
     setUser(null);
-  }, []);
+  }, [isAdmin]);
 
-  // when component mounts, check if the user is logged in
   useEffect(() => {
-    api("/users/me", { method: "GET" })
+    const admin = localStorage.getItem("isAdmin") === "true";
+    setIsAdmin(admin);
+    api(userRoute(admin, "me"), { method: "GET" })
       .then((data) => {
         setUser(data.user);
       })
@@ -55,7 +67,7 @@ export function AuthContextProvider({
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, login, logout }}>
+    <AuthContext.Provider value={{ user, isAdmin, setUser, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

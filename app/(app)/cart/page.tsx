@@ -13,7 +13,7 @@ import { Row, Col, Card } from "react-bootstrap";
 import qs from "qs";
 
 export default function CartPage() {
-  const { user } = useAuth();
+  const { user, isAdmin } = useAuth();
   const router = useRouter();
   const queryClient = useQueryClient();
   const [instructions, setInstructions] = useState("");
@@ -146,6 +146,10 @@ export default function CartPage() {
 
   if (cartItems?.length === 0 || !cartItems) {
     return <div>Your cart is empty</div>;
+  }
+
+  if (isAdmin) {
+    return <div>Admins cannot order items</div>;
   }
 
   return (

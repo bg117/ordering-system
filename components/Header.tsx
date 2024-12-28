@@ -17,15 +17,14 @@ import {
 } from "react-bootstrap";
 
 export default function Header() {
-  const { user, logout } = useAuth();
-  const { data, isLoading } = useQuery({
+  const { user, isAdmin, logout } = useAuth();
+  const { data } = useQuery({
     queryKey: ["cart-items", "count"],
     queryFn: async () => {
       const response = await api("/cart-items/count", { method: "GET" });
       return response;
     },
   });
-
 
   return (
     <Navbar expand="lg" className="bg-primary navbar-dark">
@@ -36,17 +35,31 @@ export default function Header() {
         <NavbarToggle aria-controls="basic-navbar-nav" />
         <NavbarCollapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <NavLink href="menu" active>
-              Menu
-            </NavLink>
+            {isAdmin ? (
+              <>
+                <NavLink href="admin" active>
+                  Admin Panel
+                </NavLink>
+                <NavLink href="orders" active>
+                  Orders
+                </NavLink>
+              </>
+            ) : (
+              <NavLink href="menu" active>
+                Menu
+              </NavLink>
+            )}
           </Nav>
           <Nav className="ms-auto">
             {user ? (
               <>
-                {!isLoading && data && (
+                {!isAdmin && data && (
                   <NavLink href="/cart" active>
                     <div className="d-flex align-items-center">
-                      <FontAwesomeIcon icon={faBasketShopping} className="fs-4" />
+                      <FontAwesomeIcon
+                        icon={faBasketShopping}
+                        className="fs-4"
+                      />
                       <Badge bg="secondary" className="ms-1">
                         {data.totalDocs}
                       </Badge>

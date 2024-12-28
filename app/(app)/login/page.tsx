@@ -32,14 +32,14 @@ export default function Login() {
       setError(null);
 
       try {
-        login(id + email, password);
+        login(id + email, password, !isStudent);
         router.push("/"); // Redirect to the home page after login
       } catch (error) {
         console.error(error);
         setError((error as Error).message);
       }
     },
-    [login, email, router]
+    [login, email, isStudent, router]
   );
 
   useEffect(() => {
