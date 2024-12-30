@@ -35,7 +35,7 @@ export default function Header() {
         <NavbarToggle aria-controls="basic-navbar-nav" />
         <NavbarCollapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            {isAdmin ? (
+            {isAdmin && user ? (
               <>
                 <NavLink href="admin" active>
                   Admin Panel
