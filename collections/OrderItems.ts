@@ -37,12 +37,6 @@ export const OrderItems: CollectionConfig = {
       min: 1,
     },
     {
-      name: "order",
-      type: "relationship",
-      relationTo: "orders",
-      required: true,
-    },
-    {
       name: "total",
       type: "number",
       virtual: true,

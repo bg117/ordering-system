@@ -180,6 +180,8 @@ export interface Order {
   user: number | User;
   extraInstructions?: string | null;
   placedAt?: string | null;
+  orderItems: (number | OrderItem)[];
+  total: number;
   updatedAt: string;
   createdAt: string;
 }
@@ -191,7 +193,6 @@ export interface OrderItem {
   id: number;
   item: number | Item;
   quantity: number;
-  order: number | Order;
   total: number;
   updatedAt: string;
   createdAt: string;
@@ -365,6 +366,8 @@ export interface OrdersSelect<T extends boolean = true> {
   user?: T;
   extraInstructions?: T;
   placedAt?: T;
+  orderItems?: T;
+  total?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -375,7 +378,6 @@ export interface OrdersSelect<T extends boolean = true> {
 export interface OrderItemsSelect<T extends boolean = true> {
   item?: T;
   quantity?: T;
-  order?: T;
   total?: T;
   updatedAt?: T;
   createdAt?: T;
