@@ -12,14 +12,14 @@
     "payload": "payload"
   },
   "dependencies": {
+    "@eslint/js": "^9.17.0",
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-brands-svg-icons": "^6.6.0",
     "@fortawesome/free-regular-svg-icons": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
-    "@payloadcms/db-postgres": "3.0.0-beta.120",
-    "@payloadcms/next": "3.0.0-beta.120",
-    "@payloadcms/payload-cloud": "3.0.0-beta.120",
+    "@payloadcms/db-postgres": "3.12.0",
+    "@payloadcms/next": "3.12.0",
     "@payloadcms/richtext-lexical": "3.0.0-beta.120",
     "@supabase/ssr": "^0.5.1",
     "@supabase/supabase-js": "^2.45.4",
@@ -27,23 +27,23 @@
     "bootstrap": "^5.3.3",
     "clsx": "^2.1.1",
     "graphql": "^16.8.1",
-    "next": "15.0.1",
-    "payload": "3.0.0-beta.120",
+    "next": "15.1.3",
+    "payload": "3.12.0",
     "pnpm": "^9.12.1",
     "qs": "^6.13.0",
-    "react": "19.0.0-rc-69d4b800-20241021",
+    "react": "19.0.0",
     "react-bootstrap": "^2.10.5",
-    "react-dom": "19.0.0-rc-69d4b800-20241021",
+    "react-dom": "19.0.0",
     "sharp": "^0.33.5",
     "srsths-oos": "file:"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/qs": "^6.9.16",
-    "@types/react": "npm:types-react@19.0.0-rc.1",
-    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
-    "eslint": "^8",
-    "eslint-config-next": "15.0.1",
+    "@types/react": "19.0.2",
+    "@types/react-dom": "19.0.2",
+    "eslint": "^9.17.0",
+    "eslint-config-next": "15.1.3",
     "pg": "^8.11.3",
     "pino": "^9.5.0",
     "pino-pretty": "^11.3.0",
@@ -53,8 +53,8 @@
   },
   "pnpm": {
     "overrides": {
-      "@types/react": "npm:types-react@19.0.0-rc.1",
-      "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
+      "@types/react": "19.0.2",
+      "@types/react-dom": "19.0.2"
     }
   },
   "packageManager": "pnpm@9.12.1+sha512.e5a7e52a4183a02d5931057f7a0dbff9d5e9ce3161e33fa68ae392125b79282a8a8a470a51dfc8a0ed86221442eb2fb57019b0990ed24fab519bf0e1bc5ccfc4"
