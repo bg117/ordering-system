@@ -14,8 +14,8 @@ type AuthContextType = {
   user: User | Admin | null | undefined;
   isAdmin: boolean;
   setUser: (user: User | Admin | null | undefined) => void;
-  login: (email: string, password: string, admin: boolean) => void;
-  logout: () => void;
+  login: (email: string, password: string, admin: boolean) => Promise<void>;
+  logout: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
