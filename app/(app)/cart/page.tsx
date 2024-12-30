@@ -7,10 +7,55 @@ import { CartItem as CartItemType, Item } from "@/payload-types";
 import { api } from "@/utilities/api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter, redirect } from "next/navigation";
-import { PaginatedDocs } from "payload";
-import { useCallback, useMemo, useState } from "react";
+import { PaginatedDocs, User } from "payload";
+import { useCallback, useState } from "react";
 import { Row, Col, Card } from "react-bootstrap";
 import qs from "qs";
+
+interface CreateOrderItem {
+  item: number;
+  quantity: number;
+}
+
+interface CreateOrder {
+  instructions: string;
+  userId: number;
+  items: CreateOrderItem[];
+}
+
+export class OrderService {
+  static async createOrderItems(items: CreateOrderItem[]) {
+    return Promise.all(
+      items.map((item) =>
+        api("/order-items", { body: JSON.stringify(item) }).then(
+          (res) => res.doc.id
+        )
+      )
+    );
+  }
+
+  static async createOrder({ instructions, userId, items }: CreateOrder) {
+    const orderItemIds = await this.createOrderItems(items);
+
+    return api("/orders", {
+      body: JSON.stringify({
+        instructions,
+        user: userId,
+        orderItems: orderItemIds,
+      }),
+    });
+  }
+
+  static async clearUserCart(userId: number) {
+    const query = qs.stringify(
+      {
+        where: { user: { equals: userId } },
+      },
+      { addQueryPrefix: false }
+    );
+    return api(`/cart-items?${query}`, { method: "DELETE" });
+  }
+}
 
 export default function CartPage() {
   const { user, status: userStatus } = useAuth();
@@ -69,57 +114,30 @@ export default function CartPage() {
   const cartItems = data?.docs;
   const { mutate: submitOrder } = useMutation({
     mutationKey: ["orders"],
-    mutationFn: async () => {
-      // get all cart items
-      if (!cartItems) return;
-
-      const response = await api("/orders", {
-        method: "POST",
-        body: JSON.stringify({ instructions, user: user?.id }),
+    mutationFn: async ({
+      orderItems,
+      userId,
+    }: {
+      orderItems: CreateOrderItem[];
+      userId: number;
+    }) => {
+      await OrderService.createOrder({
+        instructions,
+        userId,
+        items: orderItems,
       });
-      // get the order id
-      const orderId = response.doc.id;
-
-      // create order items
-      const orderItems = cartItems.map((item) => ({
-        order: orderId,
-        item: (item.item as Item).id,
-        quantity: item.quantity,
-      }));
-
-      // create order items
-      for (const orderItem of orderItems) {
-        await api("/order-items", {
-          method: "POST",
-          body: JSON.stringify(orderItem),
-        });
-      }
-
-      const query = qs.stringify(
-        {
-          where: {
-            user: {
-              equals: user?.id,
-            },
-          },
-        },
-        { addQueryPrefix: false }
-      );
-      // clear cart of user
-      await api(`/cart-items?${query}`, {
-        method: "DELETE",
-      });
+      await OrderService.clearUserCart(userId);
     },
     onSuccess: () => {
       router.push("/thank-you");
-      return queryClient.invalidateQueries({ queryKey: ["cart-items"] });
+      queryClient.invalidateQueries({ queryKey: ["cart-items"] });
     },
     onError: (error) => {
       throw error;
     },
   });
 
-  const calculateTotal = useMemo(() => {
+  const calculateTotal = useCallback(() => {
     if (!cartItems)
       throw new Error("Cart items are not loaded yet. Please wait...");
     return cartItems
@@ -133,6 +151,18 @@ export default function CartPage() {
   const onChangeInstructions = useCallback((instructions: string) => {
     setInstructions(instructions);
   }, []);
+
+  const onCreateOrder = useCallback(() => {
+    if (!cartItems || !user)
+      throw new Error("Cart items are not loaded yet. Please wait...");
+
+    const orderItems = cartItems.map((item) => ({
+      item: (item.item as Item).id,
+      quantity: item.quantity,
+    }));
+
+    submitOrder({ orderItems, userId: user.id });
+  }, [cartItems, submitOrder, user]);
 
   if (userStatus === "admin") return <div>Admins cannot order items</div>;
   if (userStatus === "logged-out") return redirect("/login");
@@ -174,7 +204,7 @@ export default function CartPage() {
               <hr />
               <div className="d-flex justify-content-between">
                 <strong>Total:</strong>
-                <strong>₱{calculateTotal}</strong>
+                <strong>₱{calculateTotal()}</strong>
               </div>
             </Card.Body>
           </Card>
@@ -184,7 +214,7 @@ export default function CartPage() {
           <ExtraInstructionsCard
             instructions={instructions}
             onChangeInstructions={onChangeInstructions}
-            onSubmit={submitOrder}
+            onSubmit={onCreateOrder}
           />
         </Col>
       </Row>
