@@ -10,11 +10,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 type Order = {
   id: number;
   name: string;
-  time: Date;
+  placedAt: string;
   total: number;
   grade: number;
   section: string;
-  items: string[];
   instructions?: string;
 };
 
@@ -35,70 +34,72 @@ export default function QueueOrders({ orders }: QueueOrdersProps) {
 
   return (
     <>
-      {orders.map((order) => (
-        <Card key={order.id} className="mb-3">
-          <Card.Header
-            onClick={() => toggleOrder(order.id)}
-            style={{ cursor: "pointer" }}
-          >
-            <Row className="align-items-center">
-              <Col xs={8}>
-                <strong>{order.name}</strong>
-              </Col>
-              <Col xs={2}>
-                <FontAwesomeIcon icon={faClock} className="me-2" />
-                {order.time.toLocaleTimeString()}
-              </Col>
-              <Col xs={2}>
-                <strong>₱{order.total.toFixed(2)}</strong>
-              </Col>
-            </Row>
-          </Card.Header>
-          <Collapse in={openOrders.includes(order.id)}>
-            <Card.Body>
-              <p>
-                <strong>Order Details:</strong>
-              </p>
-              <p>
-                <span role="img" aria-label="grade-level-section">
-                  🏫
-                </span>{" "}
-                {order.grade} &ndash; {order.section}
-              </p>
-              <ul>
-                {order.items.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-              {order.instructions && (
-                <p>
-                  <strong>Special Instructions:</strong> {order.instructions}
-                </p>
-              )}
-              <p>
-                <strong>Expected Price:</strong> ₱{order.total.toFixed(2)}
-              </p>
-              <Row className="mt-3">
-                <Col xs={4}>
-                  <Button variant="dark" className="w-100">
-                    <FontAwesomeIcon icon={faCheck} /> Mark as Done
-                  </Button>
+      {orders.map((order) => {
+        return (
+          <Card key={order.id} className="mb-3">
+            <Card.Header
+              onClick={() => toggleOrder(order.id)}
+              style={{ cursor: "pointer" }}
+            >
+              <Row className="align-items-center">
+                <Col xs={8}>
+                  <strong>{order.name}</strong>
                 </Col>
-                <Col xs={4}>
-                  <Button variant="light" className="w-100">
-                    Mark as Received
-                  </Button>
+                <Col xs={2}>
+                  <FontAwesomeIcon icon={faClock} className="me-2" />
+                  {order.placedAt}
                 </Col>
-                <Col xs={4}>
-                  <Button variant="secondary" className="w-100">
-                    <FontAwesomeIcon icon={faBell} /> Notify User
-                  </Button>
+                <Col xs={2}>
+                  {/* <strong>₱{order.total.toFixed(2)}</strong> */}
                 </Col>
               </Row>
-            </Card.Body>
-          </Collapse>
-        </Card>
-      ))}
+            </Card.Header>
+            <Collapse in={openOrders.includes(order.id)}>
+              <Card.Body>
+                <p>
+                  <strong>Order Details:</strong>
+                </p>
+                <p>
+                  <span role="img" aria-label="grade-level-section">
+                    🏫
+                  </span>{" "}
+                  {order.grade} &ndash; {order.section}
+                </p>
+                {/* <ul>
+                  {order.items.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+                </ul> */}
+                {order.instructions && (
+                  <p>
+                    <strong>Special Instructions:</strong> {order.instructions}
+                  </p>
+                )}
+                <p>
+                  {/* <strong>Expected Price:</strong> ₱{order.total.toFixed(2)} */}
+                </p>
+                <Row className="mt-3">
+                  <Col xs={4}>
+                    <Button variant="dark" className="w-100">
+                      <FontAwesomeIcon icon={faCheck} /> Mark as Done
+                    </Button>
+                  </Col>
+                  <Col xs={4}>
+                    <Button variant="light" className="w-100">
+                      Mark as Received
+                    </Button>
+                  </Col>
+                  <Col xs={4}>
+                    <Button variant="secondary" className="w-100">
+                      <FontAwesomeIcon icon={faBell} /> Notify User
+                    </Button>
+                  </Col>
+                </Row>
+              </Card.Body>
+            </Collapse>
+          </Card>
+        );
+      })}
     </>
   );
 }
