@@ -6,15 +6,19 @@ import { useState } from "react";
 import { Card, Button, Row, Col, Collapse } from "react-bootstrap";
 import { faBell, faCheck, faClock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Item, User } from "@/payload-types";
 
 type Order = {
   id: number;
-  name: string;
   placedAt: string;
   total: number;
-  grade: number;
-  section: string;
+  user: User;
   instructions?: string;
+  orderItems: {
+    item: Item;
+    quantity: number;
+    total: number;
+  }[];
 };
 
 interface QueueOrdersProps {
@@ -43,14 +47,16 @@ export default function QueueOrders({ orders }: QueueOrdersProps) {
             >
               <Row className="align-items-center">
                 <Col xs={8}>
-                  <strong>{order.name}</strong>
+                  <strong>
+                    {order.user.lastName}, {order.user.firstName}
+                  </strong>
                 </Col>
                 <Col xs={2}>
                   <FontAwesomeIcon icon={faClock} className="me-2" />
-                  {order.placedAt}
+                  {new Date(order.placedAt).toLocaleString()}
                 </Col>
                 <Col xs={2}>
-                  {/* <strong>₱{order.total.toFixed(2)}</strong> */}
+                  <strong>₱{order.total.toFixed(2)}</strong>
                 </Col>
               </Row>
             </Card.Header>
@@ -63,20 +69,23 @@ export default function QueueOrders({ orders }: QueueOrdersProps) {
                   <span role="img" aria-label="grade-level-section">
                     🏫
                   </span>{" "}
-                  {order.grade} &ndash; {order.section}
+                  {order.user.grade} &ndash; {order.user.section}
                 </p>
-                {/* <ul>
-                  {order.items.map((item, index) => (
-                    <li key={index}>{item}</li>
+                <ul>
+                  {order.orderItems.map((item, index) => (
+                    <li key={index}>
+                      {item.item.name} x {item.quantity} - ₱
+                      {item.total.toFixed(2)}
+                    </li>
                   ))}
-                </ul> */}
+                </ul>
                 {order.instructions && (
                   <p>
                     <strong>Special Instructions:</strong> {order.instructions}
                   </p>
                 )}
                 <p>
-                  {/* <strong>Expected Price:</strong> ₱{order.total.toFixed(2)} */}
+                  <strong>Expected Price:</strong> ₱{order.total.toFixed(2)}
                 </p>
                 <Row className="mt-3">
                   <Col xs={4}>
