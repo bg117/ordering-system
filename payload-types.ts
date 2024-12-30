@@ -179,6 +179,7 @@ export interface Order {
   id: number;
   user: number | User;
   extraInstructions?: string | null;
+  placedAt: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -362,6 +363,7 @@ export interface CartItemsSelect<T extends boolean = true> {
 export interface OrdersSelect<T extends boolean = true> {
   user?: T;
   extraInstructions?: T;
+  placedAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -16,5 +16,11 @@ export const Orders: CollectionConfig = {
       name: "extraInstructions",
       type: "text",
     },
+    {
+      name: "placedAt",
+      type: "date",
+      required: true,
+      defaultValue: () => new Date(),
+    },
   ],
 };
