@@ -3,30 +3,24 @@
 "use client";
 
 import QueueOrders from "@/components/QueueOrders"; // Adjust path if needed
+import { api } from "@/utilities/api";
+import { useQuery } from "@tanstack/react-query";
 
 export default function OrdersPage() {
-  const orders = [
-    {
-      id: 1,
-      name: "John Doe",
-      time: new Date(),
-      total: 100,
-      grade: 10,
-      section: "A",
-      items: ["Item 1", "Item 2"],
-      instructions: "Extra ketchup",
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["orders"],
+    queryFn: async () => {
+      const response = await api("/orders", {
+        method: "GET",
+      });
+      return response;
     },
-    {
-      id: 2,
-      name: "Jane Smith",
-      time: new Date(),
-      total: 150,
-      grade: 11,
-      section: "B",
-      items: ["Item 3", "Item 4"],
-      instructions: "No onions",
-    },
-  ];
+  });
+
+  if (isLoading) return <span>Loading...</span>;
+  if (isError) throw error;
+
+  const { docs: orders } = data;
 
   return (
     <div className="container">

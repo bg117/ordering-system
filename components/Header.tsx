@@ -17,8 +17,8 @@ import {
 } from "react-bootstrap";
 
 export default function Header() {
-  const { user, isAdmin, logout } = useAuth();
-  const { data } = useQuery({
+  const { status: userStatus, logout } = useAuth();
+  const { status: queryStatus, data } = useQuery({
     queryKey: ["cart-items", "count"],
     queryFn: async () => {
       const response = await api("/cart-items/count", { method: "GET" });
@@ -35,7 +35,7 @@ export default function Header() {
         <NavbarToggle aria-controls="basic-navbar-nav" />
         <NavbarCollapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            {isAdmin && user ? (
+            {userStatus === "admin" ? (
               <>
                 <NavLink href="admin" active>
                   Admin Panel
@@ -51,9 +51,11 @@ export default function Header() {
             )}
           </Nav>
           <Nav className="ms-auto">
-            {user ? (
+            {userStatus !== "loading" &&
+            userStatus !== "logged-out" &&
+            queryStatus === "success" ? (
               <>
-                {!isAdmin && data && (
+                {userStatus === "user" && (
                   <NavLink href="/cart" active>
                     <div className="d-flex align-items-center">
                       <FontAwesomeIcon

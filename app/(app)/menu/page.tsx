@@ -10,7 +10,11 @@ import { useAuth } from "@/components/AuthContextProvider";
 import Link from "next/link";
 
 export default function Menu() {
-  const { data, isLoading, isError, error } = useQuery<PaginatedDocs<Item>>({
+  const {
+    status: queryStatus,
+    data,
+    error,
+  } = useQuery<PaginatedDocs<Item>>({
     queryKey: ["menu"],
     queryFn: async () => {
       const response = await api("/items", { method: "GET" });
@@ -18,9 +22,9 @@ export default function Menu() {
     },
   });
 
-  const { user, isAdmin } = useAuth();
+  const { status: userStatus } = useAuth();
 
-  if (!!user && isAdmin) {
+  if (userStatus === "admin") {
     return (
       <main>
         <h1>Menu</h1>
@@ -32,8 +36,8 @@ export default function Menu() {
     );
   }
 
-  if (isLoading || !data) return <div>Loading...</div>;
-  if (isError) throw error;
+  if (queryStatus === "pending") return <div>Loading...</div>;
+  if (queryStatus === "error") throw error;
 
   return (
     <main className="container">

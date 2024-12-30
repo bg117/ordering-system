@@ -11,17 +11,16 @@ import {
 } from "react";
 
 type AuthContextType = {
-  user: User | Admin | null | undefined;
-  isAdmin: boolean;
-  setUser: (user: User | Admin | null | undefined) => void;
+  user: User | Admin | undefined;
+  status: "user" | "admin" | "loading" | "logged-out";
   login: (email: string, password: string, admin: boolean) => Promise<void>;
   logout: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-function userRoute(admin: boolean, route: string) {
-  return admin ? `/admins/${route}` : `/users/${route}`;
+function userRoute(admin: string, route: string) {
+  return `/${admin}s/${route}`;
 }
 
 export function AuthContextProvider({
@@ -29,45 +28,53 @@ export function AuthContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [user, setUser] = useState<User | Admin | null | undefined>(undefined);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [user, setUser] = useState<User | Admin | undefined>(undefined);
+  const [status, setStatus] = useState<
+    "user" | "admin" | "loading" | "logged-out"
+  >("loading");
 
   const login = useCallback(
     async (email: string, password: string, admin: boolean) => {
+      const type = admin ? "admin" : "user";
+
       // Call the login API
-      const { user } = await api(userRoute(admin, "login"), {
+      const { user } = await api(userRoute(type, "login"), {
         body: JSON.stringify({ email, password }),
       });
 
       // Set the user state
       setUser(user);
-      setIsAdmin(admin);
-      localStorage.setItem("isAdmin", admin.toString());
+      setStatus(type);
+      localStorage.setItem("userType", type);
     },
     []
   );
 
   const logout = useCallback(async () => {
     // Call the logout API
-    await api(userRoute(isAdmin, "logout"));
+    await api(userRoute(status, "logout"));
     // Set the user state to null
-    setUser(null);
-  }, [isAdmin]);
+    setUser(undefined);
+    setStatus("logged-out");
+  }, [status]);
 
   useEffect(() => {
-    const admin = localStorage.getItem("isAdmin") === "true";
-    setIsAdmin(admin);
-    api(userRoute(admin, "me"), { method: "GET" })
+    const type =
+      localStorage.getItem("userType") === "admin" ? "admin" : "user";
+
+    api(userRoute(type, "me"), { method: "GET" })
       .then((data) => {
         setUser(data.user);
+        setStatus(type);
       })
       .catch(() => {
-        setUser(null);
+        setUser(undefined);
+        setStatus("logged-out");
       });
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, isAdmin, setUser, login, logout }}>
+    <AuthContext.Provider value={{ user, status, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

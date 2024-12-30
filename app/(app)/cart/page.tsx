@@ -13,14 +13,16 @@ import { Row, Col, Card } from "react-bootstrap";
 import qs from "qs";
 
 export default function CartPage() {
-  const { user, isAdmin } = useAuth();
+  const { user, status: userStatus } = useAuth();
   const router = useRouter();
   const queryClient = useQueryClient();
   const [instructions, setInstructions] = useState("");
 
-  const { data, isLoading, isError, error } = useQuery<
-    PaginatedDocs<CartItemType>
-  >({
+  const {
+    data,
+    status: queryStatus,
+    error,
+  } = useQuery<PaginatedDocs<CartItemType>>({
     queryKey: ["cart-items"],
     queryFn: async () => {
       const response = await api("/cart-items", { method: "GET" });
@@ -132,24 +134,14 @@ export default function CartPage() {
     setInstructions(instructions);
   }, []);
 
-  if (user === null) {
-    return redirect("/login");
-  }
-
-  if (isLoading || !data || user === undefined) {
+  if (userStatus === "admin") return <div>Admins cannot order items</div>;
+  if (userStatus === "logged-out") return redirect("/login");
+  if (queryStatus === "pending" || userStatus === "loading")
     return <div>Loading...</div>;
-  }
-
-  if (isError) {
-    throw error;
-  }
+  if (queryStatus === "error") throw error;
 
   if (cartItems?.length === 0 || !cartItems) {
     return <div>Your cart is empty</div>;
-  }
-
-  if (isAdmin) {
-    return <div>Admins cannot order items</div>;
   }
 
   return (
