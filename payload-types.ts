@@ -192,6 +192,7 @@ export interface OrderItem {
   order: number | Order;
   item: number | Item;
   quantity: number;
+  total: number;
   updatedAt: string;
   createdAt: string;
 }

@@ -24,12 +24,6 @@ export const OrderItems: CollectionConfig = {
   },
   fields: [
     {
-      name: "order",
-      type: "relationship",
-      relationTo: "orders",
-      required: true,
-    },
-    {
       name: "item",
       type: "relationship",
       relationTo: "items",
@@ -41,6 +35,33 @@ export const OrderItems: CollectionConfig = {
       required: true,
       defaultValue: 1,
       min: 1,
+    },
+    {
+      name: "total",
+      type: "number",
+      virtual: true,
+      required: true,
+      access: {
+        update: () => false,
+      },
+      hooks: {
+        afterRead: [
+          async ({ data, req: { payload } }) => {
+            const {
+              docs: [item],
+            } = await payload.find({
+              collection: "items",
+              where: {
+                id: {
+                  equals: data?.item,
+                },
+              },
+            });
+
+            return item.price * data?.quantity;
+          },
+        ],
+      },
     },
   ],
 };
