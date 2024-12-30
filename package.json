@@ -20,7 +20,6 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@payloadcms/db-postgres": "3.12.0",
     "@payloadcms/next": "3.12.0",
-    "@payloadcms/richtext-lexical": "3.0.0-beta.120",
     "@supabase/ssr": "^0.5.1",
     "@supabase/supabase-js": "^2.45.4",
     "@tanstack/react-query": "^5.59.16",
