@@ -1,3 +1,10 @@
+## 0.9.2 (2024-12-30)
+
+### Fix
+
+- hide Admin context from logged out user
+- login proceeding without checking
+
 ## 0.9.1 (2024-12-30)
 
 ### Fix
