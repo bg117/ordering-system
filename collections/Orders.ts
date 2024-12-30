@@ -1,3 +1,4 @@
+import { Item } from "@/payload-types";
 import type { CollectionConfig } from "payload";
 
 export const Orders: CollectionConfig = {
@@ -19,7 +20,6 @@ export const Orders: CollectionConfig = {
     {
       name: "placedAt",
       type: "date",
-      required: true,
       defaultValue: () => new Date(),
     },
   ],

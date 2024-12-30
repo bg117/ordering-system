@@ -80,7 +80,7 @@ export default function CartPage() {
 
       // create order items
       const orderItems = cartItems.map((item) => ({
-        order: orderId,
+        orderId,
         item: (item.item as Item).id,
         quantity: item.quantity,
       }));

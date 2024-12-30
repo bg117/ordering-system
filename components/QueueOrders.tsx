@@ -10,13 +10,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 type Order = {
   id: number;
   name: string;
-  email: string;
-  time: string;
-  price: number;
-  gradeLevelAndSection: string;
+  time: Date;
+  total: number;
+  grade: number;
+  section: string;
   items: string[];
-  instructions: string;
-  cutlery: boolean;
+  instructions?: string;
 };
 
 interface QueueOrdersProps {
@@ -45,13 +44,13 @@ export default function QueueOrders({ orders }: QueueOrdersProps) {
             <Row className="align-items-center">
               <Col xs={8}>
                 <strong>{order.name}</strong>
-                <div>{order.email}</div>
               </Col>
               <Col xs={2}>
-                <FontAwesomeIcon icon={faClock} /> {order.time}
+                <FontAwesomeIcon icon={faClock} className="me-2" />
+                {order.time.toLocaleTimeString()}
               </Col>
               <Col xs={2}>
-                <strong>₱{order.price.toFixed(2)}</strong>
+                <strong>₱{order.total.toFixed(2)}</strong>
               </Col>
             </Row>
           </Card.Header>
@@ -64,21 +63,20 @@ export default function QueueOrders({ orders }: QueueOrdersProps) {
                 <span role="img" aria-label="grade-level-section">
                   🏫
                 </span>{" "}
-                {order.gradeLevelAndSection}
+                {order.grade} &ndash; {order.section}
               </p>
               <ul>
                 {order.items.map((item, index) => (
                   <li key={index}>{item}</li>
                 ))}
               </ul>
+              {order.instructions && (
+                <p>
+                  <strong>Special Instructions:</strong> {order.instructions}
+                </p>
+              )}
               <p>
-                <strong>Special Instructions:</strong> {order.instructions}
-              </p>
-              <p>
-                <strong>Cutlery:</strong> {order.cutlery ? "Yes" : "No"}
-              </p>
-              <p>
-                <strong>Expected Price:</strong> ₱{order.price.toFixed(2)}
+                <strong>Expected Price:</strong> ₱{order.total.toFixed(2)}
               </p>
               <Row className="mt-3">
                 <Col xs={4}>

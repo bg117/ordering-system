@@ -37,10 +37,17 @@ export const OrderItems: CollectionConfig = {
       min: 1,
     },
     {
+      name: "orderId",
+      type: "relationship",
+      relationTo: "orders",
+      required: true,
+    },
+    {
       name: "total",
       type: "number",
       virtual: true,
       required: true,
+      defaultValue: 0,
       access: {
         update: () => false,
       },

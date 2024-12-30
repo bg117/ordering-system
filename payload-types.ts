@@ -179,7 +179,7 @@ export interface Order {
   id: number;
   user: number | User;
   extraInstructions?: string | null;
-  placedAt: string;
+  placedAt?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -189,9 +189,9 @@ export interface Order {
  */
 export interface OrderItem {
   id: number;
-  order: number | Order;
   item: number | Item;
   quantity: number;
+  orderId: number | Order;
   total: number;
   updatedAt: string;
   createdAt: string;
@@ -373,9 +373,10 @@ export interface OrdersSelect<T extends boolean = true> {
  * via the `definition` "order-items_select".
  */
 export interface OrderItemsSelect<T extends boolean = true> {
-  order?: T;
   item?: T;
   quantity?: T;
+  orderId?: T;
+  total?: T;
   updatedAt?: T;
   createdAt?: T;
 }
