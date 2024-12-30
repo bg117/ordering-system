@@ -9,7 +9,7 @@ import qs from "qs";
 
 export default function OrdersPage() {
   const query = qs.stringify(
-    { sort: "placedAt", order: "desc", depth: 3 },
+    { sort: "-placedAt", depth: 3 },
     { addQueryPrefix: false }
   );
 
