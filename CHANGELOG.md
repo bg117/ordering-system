@@ -1,3 +1,9 @@
+## 0.9.1 (2024-12-30)
+
+### Fix
+
+- breaking change from 3.0 beta
+
 ## 0.9.0 (2024-12-28)
 
 ### Feat
