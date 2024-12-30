@@ -115,6 +115,8 @@ export interface User {
   id: number;
   grade: number;
   section: string;
+  firstName: string;
+  lastName: string;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -301,6 +303,8 @@ export interface AdminsSelect<T extends boolean = true> {
 export interface UsersSelect<T extends boolean = true> {
   grade?: T;
   section?: T;
+  firstName?: T;
+  lastName?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
