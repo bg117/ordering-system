@@ -37,7 +37,7 @@ export const OrderItems: CollectionConfig = {
       min: 1,
     },
     {
-      name: "orderId",
+      name: "order",
       type: "relationship",
       relationTo: "orders",
       required: true,

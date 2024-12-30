@@ -191,7 +191,7 @@ export interface OrderItem {
   id: number;
   item: number | Item;
   quantity: number;
-  orderId: number | Order;
+  order: number | Order;
   total: number;
   updatedAt: string;
   createdAt: string;
@@ -375,7 +375,7 @@ export interface OrdersSelect<T extends boolean = true> {
 export interface OrderItemsSelect<T extends boolean = true> {
   item?: T;
   quantity?: T;
-  orderId?: T;
+  order?: T;
   total?: T;
   updatedAt?: T;
   createdAt?: T;

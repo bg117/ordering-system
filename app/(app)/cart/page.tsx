@@ -8,7 +8,7 @@ import { api } from "@/utilities/api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter, redirect } from "next/navigation";
 import { PaginatedDocs } from "payload";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Row, Col, Card } from "react-bootstrap";
 import qs from "qs";
 
@@ -82,7 +82,7 @@ export default function CartPage() {
 
       // create order items
       const orderItems = cartItems.map((item) => ({
-        orderId,
+        order: orderId,
         item: (item.item as Item).id,
         quantity: item.quantity,
       }));
@@ -119,7 +119,7 @@ export default function CartPage() {
     },
   });
 
-  const calculateTotal = useCallback(() => {
+  const calculateTotal = useMemo(() => {
     if (!cartItems)
       throw new Error("Cart items are not loaded yet. Please wait...");
     return cartItems
@@ -174,7 +174,7 @@ export default function CartPage() {
               <hr />
               <div className="d-flex justify-content-between">
                 <strong>Total:</strong>
-                <strong>₱{calculateTotal()}</strong>
+                <strong>₱{calculateTotal}</strong>
               </div>
             </Card.Body>
           </Card>
