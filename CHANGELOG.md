@@ -1,3 +1,9 @@
+## 0.10.3 (2024-12-31)
+
+### Fix
+
+- do not redirect admins to /menu
+
 ## 0.10.2 (2024-12-31)
 
 ### Fix
