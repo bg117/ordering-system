@@ -37,7 +37,7 @@ export class OrderService {
   static async createOrder({ instructions, userId, items }: CreateOrder) {
     const orderItemIds = await this.createOrderItems(items);
 
-    return api("/orders", {
+    return api("/orders?depth=0", {
       body: JSON.stringify({
         instructions,
         user: userId,
@@ -130,7 +130,7 @@ export default function CartPage() {
     },
     onSuccess: () => {
       router.push("/thank-you");
-      queryClient.invalidateQueries({ queryKey: ["cart-items"] });
+      return queryClient.invalidateQueries({ queryKey: ["cart-items"] });
     },
     onError: (error) => {
       throw error;
@@ -188,7 +188,6 @@ export default function CartPage() {
               <div>
                 {cartItems.map((item, index) => (
                   <CartItem
-                    key={index}
                     name={(item.item as Item).name}
                     quantity={item.quantity}
                     price={(item.item as Item).price}
