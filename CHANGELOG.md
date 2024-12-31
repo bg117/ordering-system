@@ -1,3 +1,26 @@
+## 0.10.0 (2024-12-31)
+
+### Feat
+
+- make orders sort of realtime
+- fill in order information with actual info from db
+- allow totaling of orders
+- implement queue
+- i hate this so much
+- add total field for order items
+- add "order placed at" field in orders table
+- add first name and last name columns to user table
+
+### Fix
+
+- ordering mechanism
+- asc and desc is built in into the query param
+- rename orderId to order
+
+### Refactor
+
+- switch to status instead of bool
+
 ## 0.9.3 (2024-12-30)
 
 ### Fix
