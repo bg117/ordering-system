@@ -188,6 +188,7 @@ export default function CartPage() {
               <div>
                 {cartItems.map((item, index) => (
                   <CartItem
+                    key={index}
                     name={(item.item as Item).name}
                     quantity={item.quantity}
                     price={(item.item as Item).price}
