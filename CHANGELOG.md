@@ -1,3 +1,9 @@
+## 0.10.2 (2024-12-31)
+
+### Fix
+
+- remove export in ExportService
+
 ## 0.10.1 (2024-12-31)
 
 ### Fix
