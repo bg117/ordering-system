@@ -23,7 +23,7 @@ interface CreateOrder {
   items: CreateOrderItem[];
 }
 
-export class OrderService {
+class OrderService {
   static async createOrderItems(items: CreateOrderItem[]) {
     return Promise.all(
       items.map((item) =>
