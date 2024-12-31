@@ -3,24 +3,20 @@
 import { useAuth } from "@/components/AuthContextProvider";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import {statSync} from "node:fs";
 
 export default function Home() {
-  const { user, isAdmin } = useAuth();
+  const { user, status } = useAuth();
 
-  if (user === undefined) {
-    return <div>Loading...</div>;
-  }
-
-  if (!isAdmin || user === null) {
-    redirect("/menu");
-  }
+  if (status === "loading") return <div>Loading...</div>;
+  if (status === "user" || status === "logged-out") redirect("/menu");
 
   return (
     <main>
       <h1>Home</h1>
       <p>Welcome to the Online Ordering System.</p>
       <p>
-        <span>Logged in as {user.email}</span>
+        <span>Logged in as {user?.email}</span>
         <br />
       </p>
       <h3>Quick Links for Admins</h3>
