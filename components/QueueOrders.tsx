@@ -46,36 +46,46 @@ export default function QueueOrders({ orders }: QueueOrdersProps) {
               style={{ cursor: "pointer" }}
             >
               <Row className="align-items-center">
-                <Col xs={8}>
+                <Col xs={3} lg={4}>
                   <strong>
                     {order.user.lastName}, {order.user.firstName}
                   </strong>
                 </Col>
-                <Col xs={2}>
+                <Col xs={2} lg={2}>
+                  <strong>
+                    {order.user.grade} &ndash; {order.user.section}
+                  </strong>
+                </Col>
+                <Col xs={4} lg={3}>
                   <FontAwesomeIcon icon={faClock} className="me-2" />
                   {new Date(order.placedAt).toLocaleTimeString()}
                 </Col>
-                <Col xs={2}>
+                <Col xs={2} lg={2}>
                   <strong>₱{order.total.toFixed(2)}</strong>
+                </Col>
+                <Col xs={1}>
+                {/* circular button with checkmark icon */}
+                  <Button
+                    variant="outline-dark"
+                    className="rounded-circle"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      console.log("Mark as Done clicked");
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faCheck} />
+                  </Button>
                 </Col>
               </Row>
             </Card.Header>
             <Collapse in={openOrders.includes(order.id)}>
               <Card.Body>
-                <p>
-                  <strong>Order Details:</strong>
-                </p>
-                <p>
-                  <span role="img" aria-label="grade-level-section">
-                    🏫
-                  </span>{" "}
-                  {order.user.grade} &ndash; {order.user.section}
-                </p>
+                <h5>Order</h5>
                 <ul>
                   {order.orderItems.map((item, index) => (
                     <li key={index}>
-                      {item.item.name} x {item.quantity} - ₱
-                      {item.total.toFixed(2)}
+                      {item.item.name} × {item.quantity} – <strong>₱
+                      {item.total.toFixed(2)}</strong>
                     </li>
                   ))}
                 </ul>
@@ -84,26 +94,7 @@ export default function QueueOrders({ orders }: QueueOrdersProps) {
                     <strong>Special Instructions:</strong> {order.instructions}
                   </p>
                 )}
-                <p>
-                  <strong>Expected Price:</strong> ₱{order.total.toFixed(2)}
-                </p>
-                <Row className="mt-3">
-                  <Col xs={4}>
-                    <Button variant="dark" className="w-100">
-                      <FontAwesomeIcon icon={faCheck} /> Mark as Done
-                    </Button>
-                  </Col>
-                  <Col xs={4}>
-                    <Button variant="light" className="w-100">
-                      Mark as Received
-                    </Button>
-                  </Col>
-                  <Col xs={4}>
-                    <Button variant="secondary" className="w-100">
-                      <FontAwesomeIcon icon={faBell} /> Notify User
-                    </Button>
-                  </Col>
-                </Row>
+                <h5>₱{order.total.toFixed(2)}</h5>
               </Card.Body>
             </Collapse>
           </Card>
