@@ -7,6 +7,8 @@ import { Card, Button, Row, Col, Collapse } from "react-bootstrap";
 import { faBell, faCheck, faClock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Item, User } from "@/payload-types";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { api } from "@/utilities/api";
 
 type Order = {
   id: number;
@@ -35,6 +37,21 @@ export default function QueueOrders({ orders }: QueueOrdersProps) {
         : [...prevOpenOrders, id]
     );
   };
+
+  const queryClient = useQueryClient();
+
+  const {mutate, status} = useMutation({
+    mutationFn: async (id: number) => {
+      await api(`/orders/${id}`, {
+        method: "DELETE",
+      });
+
+      alert(`Order ${id} marked as done`);
+
+      queryClient.invalidateQueries({queryKey: ["orders"]});
+    },
+    mutationKey: ["orders", "delete"],
+  })
 
   return (
     <>
@@ -68,10 +85,8 @@ export default function QueueOrders({ orders }: QueueOrdersProps) {
                   <Button
                     variant="outline-dark"
                     className="rounded-circle"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      console.log("Mark as Done clicked");
-                    }}
+                    disabled={status === "pending"}
+                    onClick={() => mutate(order.id)}
                   >
                     <FontAwesomeIcon icon={faCheck} />
                   </Button>
