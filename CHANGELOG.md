@@ -1,3 +1,9 @@
+## 0.11.1 (2025-01-26)
+
+### Fix
+
+- use S3 instead of cloudinary
+
 ## 0.11.0 (2025-01-26)
 
 ### Feat
