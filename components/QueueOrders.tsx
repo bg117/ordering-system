@@ -53,7 +53,7 @@ export default function QueueOrders({ orders }: QueueOrdersProps) {
                 </Col>
                 <Col xs={2}>
                   <FontAwesomeIcon icon={faClock} className="me-2" />
-                  {new Date(order.placedAt).toLocaleString()}
+                  {new Date(order.placedAt).toLocaleTimeString()}
                 </Col>
                 <Col xs={2}>
                   <strong>₱{order.total.toFixed(2)}</strong>
