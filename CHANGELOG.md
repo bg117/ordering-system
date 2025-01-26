@@ -1,3 +1,14 @@
+## 0.12.0 (2025-01-26)
+
+### Feat
+
+- add mark as done functionality
+- add small button to mark order as done
+
+### Fix
+
+- display only time in order
+
 ## 0.11.2 (2025-01-26)
 
 ### Fix
