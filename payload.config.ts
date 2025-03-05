@@ -19,6 +19,8 @@ const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
 export default buildConfig({
+  serverURL: process.env.NEXT_PUBLIC_URL || "",
+  csrf: [process.env.NEXT_PUBLIC_URL || ""],
   admin: {
     user: Admins.slug,
     importMap: {
@@ -39,7 +41,7 @@ export default buildConfig({
   plugins: [
     s3Storage({
       collections: {
-        media: true
+        media: true,
       },
       bucket: process.env.S3_BUCKET || "",
       config: {
