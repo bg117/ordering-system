@@ -35,7 +35,6 @@ export const CartItems: CollectionConfig = {
       type: "relationship",
       relationTo: "items",
       required: true,
-      unique: true, // Only one of each item in a cart (quantity is separate)
     },
     {
       name: "quantity",
