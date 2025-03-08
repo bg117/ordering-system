@@ -17,10 +17,10 @@ export const OrderItems: CollectionConfig = {
   slug: "order-items",
   access: {
     // users can only see their own cart items
-    create: ({ req: { user } }) => !!user,
-    read: isSameUserOrAdmin,
-    update: isSameUserOrAdmin,
-    delete: isSameUserOrAdmin,
+    create: () => true,
+    read: () => true,
+    update: () => true,
+    delete: () => true,
   },
   fields: [
     {

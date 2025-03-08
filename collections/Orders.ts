@@ -16,10 +16,10 @@ const isSameUserOrAdmin: Access = async ({ req: { user } }) => {
 export const Orders: CollectionConfig = {
   slug: "orders",
   access: {
-    create: ({ req: { user } }) => !!user,
-    read: isSameUserOrAdmin,
-    update: isSameUserOrAdmin,
-    delete: isSameUserOrAdmin,
+    create: () => true,
+    read: () => true,
+    update: () => true,
+    delete: () => true,
   },
   fields: [
     {
